@@ -1,0 +1,20 @@
+%h1= @title.name
+%h2= @title.other_name
+
+- @title.data_fields.each do |data_field|
+  %dl.data_field
+    - if data_field.tag.present?
+      %dt Tag
+      %dd= data_field.tag
+    - if data_field.ind1.present?
+      %dt Ind1
+      %dd= data_field.ind1
+    - if data_field.ind2.present?
+      %dt Ind2
+      %dd= data_field.ind2
+    - if data_field.code.present?
+      %dt Code
+      %dd= data_field.code
+    - if data_field.value.present?
+      %dt Value
+      %dd= data_field.value

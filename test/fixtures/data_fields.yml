@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  tag: MyString
+  ind1: MyString
+  ind2: MyString
+  title_id: 1
+
+two:
+  tag: MyString
+  ind1: MyString
+  ind2: MyString
+  title_id: 1
