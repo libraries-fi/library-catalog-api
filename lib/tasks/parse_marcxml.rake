@@ -4,14 +4,14 @@ task :default => :parse_marcxml
 
 desc "Parse MARCXML file to database."
 task :parse_marcxml => :environment do
-  filename = ENV["FILE"] || ""
+  filename = "#{Rails.root}/lib/tasks/helmet_catalog_0001.xml"
   
   begin
     xml = Nokogiri::XML(File.open(filename))
 
     xml.css("collection record").css("leader, datafield, controlfield")
     xml.css('collection record').each do |record|
-      title = Title.create!
+      title = Record.create!
       record.css("leader, datafield, controlfield").each do |field|
         if field.children.empty?
           if field.name == "leader"
@@ -26,10 +26,18 @@ task :parse_marcxml => :environment do
             data_field.ind1 = field[:ind1] if field[:ind1].present?
             data_field.ind2 = field[:ind2] if field[:ind2].present?
             data_field.code = sub_field[:code]
+            data_field.helmet_id = record.css("controlfield").first.inner_html
             data_field.value = sub_field.inner_html
             data_field.save!
           end
         end
+      end
+      Record.all.each do |record|
+        record.author_fields = record.data_fields.where("tag = '100' OR tag = '700'").map(&:value).join(", ")
+        record.isbn = record.data_fields.where("tag = '020' OR tag = '024'").first.try(:value)
+        record.title_fields = record.data_fields.where("tag = '245'").map(&:value).join(", ")
+        record.helmet_id = record.data_fields.first.helmet_id
+        record.save
       end
     end
     
@@ -39,12 +47,23 @@ task :parse_marcxml => :environment do
 end
 
 task :parse_marcxml_sax => :environment do
-  filename = ENV["FILE"] || ""
+  # class Dir
+  #     def self.ls dir, glob = File.join('**', '**'), &block
+  #       ret = [] unless block
+  #       Dir.glob(File.join(dir, glob)) do |entry|
+  #        block ? block.call(entry) : ret.push(entry)
+  #       end
+  #       ret
+  #     end
+  #   end
   
-  begin
-    parser = Nokogiri::XML::SAX::Parser.new(MarcxmlParser.new)
-    parser.parse(File.open(filename))
-  rescue Errno::ENOENT
-    abort "You need to pass the filename: rake parse_marcxml FILE=[existing filename]"
-  end
+  #Dir.ls("#{Rails.root}/lib/tasks/helmet_catalogdata/helmet_catalogdata_1000a") do |entry|
+  entry = "#{Rails.root}/lib/tasks/helmet_catalog_0001.xml"
+    begin
+      parser = Nokogiri::XML::SAX::Parser.new(MarcxmlParser.new)
+      parser.parse(File.open(entry))
+    rescue Errno::ENOENT
+      abort "You need to pass the filename: rake parse_marcxml FILE=[existing filename]"
+    end
+  #end
 end

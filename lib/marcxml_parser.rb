@@ -9,12 +9,12 @@ class MarcxmlParser < Nokogiri::XML::SAX::Document
  
   def start_element(name, attributes = [])
     if name == "record"
-      @title = Title.create!
+      @record = Record.create!
     elsif name == "leader"
-      @current_field = @title.data_fields.build(:tag => "leader")
+      @current_field = @record.data_fields.build(:tag => "leader")
 
     elsif ["datafield", "leader", "controlfield"].include? name
-      @current_field = @title.data_fields.build(
+      @current_field = @record.data_fields.build(
         :tag => find_value(attributes, "tag"),
         :ind1 => find_value(attributes, "ind1"),
         :ind2 => find_value(attributes, "ind2"),
@@ -27,22 +27,25 @@ class MarcxmlParser < Nokogiri::XML::SAX::Document
 
   def characters(string)
     if @current_field.is_a?(DataField)
-      @current_field.value = string
+      unless string.blank?
+        @current_field.value = string
+      end
     end
   end
 
   def end_element(name)
     if name == "record"
-      @title = nil
+      @record = nil
     elsif ["datafield", "leader", "controlfield"].include? name
       @current_field.save!
+      @record.save!
       @current_field = nil
     elsif name == "subfield"
       @current_field.save!
     end
   end
 
-  def find_value(attrs, key)
-    attrs.find {|attr| attr.first == key }.try(:last)
+  def find_value(attrs, wanted_key)
+    attrs.find {|key, value| key == wanted_key }.try(:last)
   end
 end

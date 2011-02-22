@@ -47,6 +47,7 @@ GEM
     mime-types (1.16)
     nokogiri (1.4.4)
     pg (0.10.0)
+    pg_search (0.1.1)
     polyglot (0.3.1)
     rack (1.2.1)
     rack-mount (0.6.13)
@@ -80,5 +81,6 @@ DEPENDENCIES
   haml-rails
   nokogiri
   pg
+  pg_search
   rails (= 3.0.3)
   will_paginate

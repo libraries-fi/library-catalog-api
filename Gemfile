@@ -9,6 +9,8 @@ gem 'pg'
 gem 'nokogiri'
 gem 'haml-rails'
 gem 'will_paginate'
+gem 'pg_search'
+gem 'will_paginate'
 
 # Use unicorn as the web server
 # gem 'unicorn'

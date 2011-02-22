@@ -10,21 +10,24 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110112134749) do
+ActiveRecord::Schema.define(:version => 20110222124133) do
 
   create_table "data_fields", :force => true do |t|
     t.string   "tag"
     t.string   "ind1"
     t.string   "ind2"
-    t.integer  "title_id"
+    t.integer  "record_id"
     t.string   "code"
     t.text     "value"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "titles", :force => true do |t|
-    t.string   "permalink"
+  create_table "records", :force => true do |t|
+    t.text     "author_fields"
+    t.string   "isbn"
+    t.text     "title_fields"
+    t.string   "helmet_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

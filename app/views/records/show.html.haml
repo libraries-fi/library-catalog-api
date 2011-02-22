@@ -1,7 +1,7 @@
-%h1= @title.name
-%h2= @title.other_name
+%h1= @record.name
+%h2= @record.other_name
 
-- @title.data_fields.each do |data_field|
+- @record.data_fields.each do |data_field|
   %dl.data_field
     - if data_field.tag.present?
       %dt Tag

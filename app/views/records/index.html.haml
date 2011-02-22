@@ -1,0 +1,16 @@
+= form_tag search_path, :method => :get do 
+  = text_field_tag :query, nil, :placeholder => 'Search by title...'
+  = submit_tag "Search"
+%h1 Aineisto
+
+%table
+  %tr
+    %th Nimeke
+    %th Alanimeke
+
+    - @records.each do |record|
+      %tr
+        %td= link_to record.name, show_record_path(record.helmet_id)
+        %td= record.other_name
+
+= will_paginate @records

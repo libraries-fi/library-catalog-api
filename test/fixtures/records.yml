@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  author_fields: MyText
+  isbn: MyString
+  title_fields: MyText
+  helmet_id: MyString
+
+two:
+  author_fields: MyText
+  isbn: MyString
+  title_fields: MyText
+  helmet_id: MyString

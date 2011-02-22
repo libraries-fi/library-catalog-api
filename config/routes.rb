@@ -1,5 +1,9 @@
 KirjastoData::Application.routes.draw do
-  resources :titles
+  match "/records" => "records#index", :via => :get, :as => "records"
+  match "/records/:helmet_id" => "records#show", :via => :get, :as => "show_record"
+  match "/search/isbn" => "search#isbn", :as => :search, :via => :get, :format => :json
+  match "/search/author" => "search#author", :as => :search, :via => :get, :format => :json
+  match "/search/title" => "search#title", :as => :search, :via => :get, :format => :json
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -50,7 +54,7 @@ KirjastoData::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  # root :to => "welcome#index"
+  root :to => "pages#home"
 
   # See how all your routes lay out with "rake routes"
 
