@@ -11,17 +11,20 @@ class MarcxmlParser < Nokogiri::XML::SAX::Document
     if name == "record"
       @record = Record.create!
     elsif name == "leader"
-      @current_field = @record.data_fields.build(:tag => "leader")
+      @current_field = @record.data_fields.build(:field_type => "leader")
 
     elsif ["datafield", "leader", "controlfield"].include? name
       @current_field = @record.data_fields.build(
+        :field_type => name,
         :tag => find_value(attributes, "tag"),
         :ind1 => find_value(attributes, "ind1"),
         :ind2 => find_value(attributes, "ind2"),
       )
+      @current_field.save!
     elsif name == "subfield"
-      @current_field = @current_field.clone
-      @current_field.code = find_value(attributes, "code")
+      @current_subfield = @current_field.subfields.build(
+        :code => find_value(attributes, "code")
+      )
     end
   end
 
@@ -31,6 +34,11 @@ class MarcxmlParser < Nokogiri::XML::SAX::Document
         @current_field.value = string
       end
     end
+    if @current_subfield.is_a?(Subfield)
+      unless string.blank?
+        @current_subfield.value = string
+      end
+    end
   end
 
   def end_element(name)
@@ -38,10 +46,11 @@ class MarcxmlParser < Nokogiri::XML::SAX::Document
       @record = nil
     elsif ["datafield", "leader", "controlfield"].include? name
       @current_field.save!
-      @record.save!
       @current_field = nil
+      @record.save!
     elsif name == "subfield"
-      @current_field.save!
+      @current_subfield.save!
+      @current_subfield = nil
     end
   end
 

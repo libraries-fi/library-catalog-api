@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  value: MyString
+  code: MyString
+  data_field_id: 1
+
+two:
+  value: MyString
+  code: MyString
+  data_field_id: 1
