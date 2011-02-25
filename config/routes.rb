@@ -5,7 +5,7 @@ KirjastoData::Application.routes.draw do
   
   match "/search/isbn" => "search#isbn", :as => :search, :via => :get
   match "/search/author" => "search#author", :as => :search, :via => :get
-  match "/search/title" => "search#title", :as => :search, :via => :get
+  match "/search/title" => "search#title", :as => :search, :via => :get, :format => :json
 
   root :to => "pages#home"
 end
