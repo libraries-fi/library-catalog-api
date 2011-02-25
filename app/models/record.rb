@@ -6,11 +6,11 @@ class Record < ActiveRecord::Base
   pg_search_scope :search_by_author, :against => :author_main
 
   def name
-    data_fields.where(:tag => "245", :code => "a").first.value
+    data_fields.where(:tag => "245").first.subfields.where(:code => "a").first.try(:value)
   end
 
   def other_name
-    data_fields.where(:tag => "245", :code => "b").first.try(:value)
+    data_fields.where(:tag => "245").first.subfields.where(:code => "b").first.try(:value)
   end
   
   before_save :denormalize_fields
@@ -18,17 +18,9 @@ class Record < ActiveRecord::Base
   private
     
   def denormalize_fields
-    author_main = ""
-    data_fields.where("tag = '100' OR tag = '700'").each do |data_field|
-      author_main += data_field.subfields.where("code = 'a'").first.try(:value)
-    end
-    title_main = ""
-    data_fields.where("tag = '245'").each do |data_field|
-      title_main += data_field.subfields.where("code = 'a'").first.try(:value)
-    end
-    self.author_main = author_main
-    self.title_main = title_main
-    # self.isbn = data_fields.where("tag = '024' OR tag = '020'").first.subfields.first.try(:value)
+    self.author_main = data_fields.where("tag = '100' OR tag = '700'").first.subfields.where("code = 'a'").first.value if data_fields.where("tag = '100' OR tag = '700'").any?
+    self.title_main = data_fields.where("tag = '245'").first.subfields.where(:code => "a").first.value if data_fields.where("tag = '245'").any?
+    self.isbn = data_fields.where("tag = '024' OR tag = '020'").first.subfields.first.try(:value) if data_fields.where("tag = '024' OR tag = '020'").any?
     self.helmet_id = data_fields.where("tag = '001'").first.try(:value)
   end
 end

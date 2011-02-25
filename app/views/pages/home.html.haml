@@ -1,19 +1,62 @@
-%h2 Documentation
+%h2 Kirjasto-Data API Documentation
+%br
 
-%h3 Seach:
-%em For now just json supported
+%h3 What:
+%p Currently the API is read-only.
+%p This API uses Helmet Library's data and provides search results in json and marcxml format.
+%br
 
-%p You can search by: author, title or isbn
-%p 
-  %strong By author: 
-  localhost:3000/search/author?query=Paul
-  %br
-  %strong By title: 
-  localhost:3000/search/title?query=007+ja+kultainen+ase
-  %br
-  %strong By ISBN: 
-  localhost:3000/search/isbn?query=6415751554957
-%em these urls will show the first page with the first 5 search results
+%h3 How:
 
 %p 
-  %strong Add to the url &page=2 to view the next page
+  At the moment you can perform searches by: author, title or isbn.
+  %br
+  Depending on the format you want the search result to be in, you can change the parameter "format" in the url to either 'json' or 'marcxml'
+
+.how{:style => "margin-left: 20px"}
+  
+  %h4 By author:
+  %p Example url
+  %em 
+    http://localhost:3000/search/author.json?query=Campbell 
+    %strong OR
+    http://localhost:3000/search/author.marcxml?query=Campbell
+    
+  %h4 By title:
+  %p Example url
+  %em
+    http://localhost:3000/search/title.json?query=raportti
+    %strong OR
+    http://localhost:3000/search/title.marcxml?query=raportti
+    
+  %h4 By ISBN:
+  %p Example url
+  %em
+    http://localhost:3000/search/isbn.json?query=6420614617953
+    %strong OR
+    http://localhost:3000/search/isbn.marcxml?query=6420614617953
+%br    
+%h3 Output
+.output{:style => "margin-left:20px"}
+  %p Depending on the format you requested in the url you can get:
+  
+  %h4 JSON
+  %p Output example
+  %em {"current_page":1,"per_page":5,"total_entries":1,"entries":[{"leader":"00485nam  2200169   4500","title_main":"\u00e4misty\u00f6ryhm\u00e4n raportti 1 :","helmet_id":"kr2043314X","author_main":null,"author_group":["Helsingin kaupunki."],"author":[],"description":["[16 s.] :"]}]}
+  
+  %h4 MARCXML
+  %p Output example
+  %em 00485nam 2200169 4500 kr2043314X 20021115010101.0 000905s1979 xx fin (FI-HELMET)b1000002 fin Helsingin kaupunki. äivähoitovirasto ämistyöryhmän raportti 1 : älineistö ja materiaali Helsinki, 1979 [16 s.] : nid. suomi 180.2 KIRJA / BOK *03VKR199000
+
+%br
+%h3 Pagination for JSON format
+.pagination{:style => "margin-left:20px"}
+  %em {"current_page":1,"per_page":5,"total_entries":0,"entries":[]}
+  %p Every search result in json format will start always like in the example above.
+  %p If the number of 'total_entries' is bigger that the 'per_page' attribute, you can change the 'current_page' by adding to the end of the url '&page=[the number of the page you wish to view]' like in the example bellow:
+  %em http://localhost:3000/search/title.json?query=ja&page=2
+%br
+%br
+
+  
+  
