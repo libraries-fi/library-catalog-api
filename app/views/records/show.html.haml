@@ -2,19 +2,19 @@
 %h2= @record.other_name
 
 - @record.data_fields.each do |data_field|
-  %dl.data_field
+  %p
+    - if data_field.field_type.present?
+      = data_field.field_type.capitalize + ": "
+    - if data_field.value.present? && data_field.field_type != "datafield"
+      = "Value: " + data_field.value
     - if data_field.tag.present?
-      %dt Tag
-      %dd= data_field.tag
+      = "Tag: " + data_field.tag + ", "
     - if data_field.ind1.present?
-      %dt Ind1
-      %dd= data_field.ind1
+      = "Ind1: " + data_field.ind1 + ", "
     - if data_field.ind2.present?
-      %dt Ind2
-      %dd= data_field.ind2
-    - if data_field.code.present?
-      %dt Code
-      %dd= data_field.code
-    - if data_field.value.present?
-      %dt Value
-      %dd= data_field.value
+      = "Ind2: " + data_field.ind2 + ", "
+    - if data_field.subfields.any?
+      - data_field.subfields.each do |subfield|
+        = "Subfield: " + "code: " + subfield.code + ", " + "value: " + subfield.value + ", "
+      
+    
