@@ -1,0 +1,13 @@
+#navigation {
+  margin-bottom: 30px;
+  list-style: none;
+}
+
+#navigation li {
+  margin: 0 30px 0 0;
+  display: inline-block;
+}
+
+a {
+  color: #3465a4;
+}

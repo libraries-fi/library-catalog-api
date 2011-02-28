@@ -1,14 +1,27 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>KirjastoData</title>
-  <%= stylesheet_link_tag :all %>
-  <%= javascript_include_tag :defaults %>
-  <%= csrf_meta_tag %>
-</head>
+  <head>
+    <meta content='text/html; charset=utf-8' http-equiv='content-type' /> 
+    <title>KirjastoData</title>
+    <link href='https://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Puritan:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Ubuntu:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
+    <%= stylesheet_link_tag :all %>
+    <%= csrf_meta_tag %>
+  </head>
 <body>
-<%= link_to "Home", :root %> | <%= link_to "Records", records_path %>
-<%= yield %>
+  <div class="container_12">
+    <div class="grid_12" id="header">
+      <ul id="navigation">
+        <h1>Kirjasto-Data API Documentation</h1>
 
+        <li><%= link_to "Home", :root %></li>
+        <li><%= link_to "Records", records_path %></li>
+    </div>
+
+    <div class="grid_12" id="content">
+      <%= yield %>
+    </div>
+  </div>
 </body>
 </html>

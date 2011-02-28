@@ -1,62 +1,65 @@
-%h2 Kirjasto-Data API Documentation
-%br
+:textile
+  h2. What
 
-%h3 What:
-%p Currently the API is read-only.
-%p This API uses Helmet Library's data and provides search results in json and marcxml format.
-%br
+  Currently the API is read-only.
 
-%h3 How:
+  This API uses "Helmet Library data":http://data.kirjastot.fi and provides search results in json and marcxml format.
 
-%p 
+  h2. How
+
   At the moment you can perform searches by: author, title or isbn.
-  %br
+
   Depending on the format you want the search result to be in, you can change the parameter "format" in the url to either 'json' or 'marcxml'
 
-.how{:style => "margin-left: 20px"}
-  
-  %h4 By author:
-  %p Example url
-  %em 
-    http://localhost:3000/search/author.json?query=Campbell 
-    %strong OR
-    http://localhost:3000/search/author.marcxml?query=Campbell
-    
-  %h4 By title:
-  %p Example url
-  %em
-    http://localhost:3000/search/title.json?query=raportti
-    %strong OR
-    http://localhost:3000/search/title.marcxml?query=raportti
-    
-  %h4 By ISBN:
-  %p Example url
-  %em
-    http://localhost:3000/search/isbn.json?query=6420614617953
-    %strong OR
-    http://localhost:3000/search/isbn.marcxml?query=6420614617953
-%br    
-%h3 Output
-.output{:style => "margin-left:20px"}
-  %p Depending on the format you requested in the url you can get:
-  
-  %h4 JSON
-  %p Output example
-  %em {"current_page":1,"per_page":5,"total_entries":1,"entries":[{"leader":"00485nam  2200169   4500","title_main":"\u00e4misty\u00f6ryhm\u00e4n raportti 1 :","helmet_id":"kr2043314X","author_main":null,"author_group":["Helsingin kaupunki."],"author":[],"description":["[16 s.] :"]}]}
-  
-  %h4 MARCXML
-  %p Output example
-  %em 00485nam 2200169 4500 kr2043314X 20021115010101.0 000905s1979 xx fin (FI-HELMET)b1000002 fin Helsingin kaupunki. äivähoitovirasto ämistyöryhmän raportti 1 : älineistö ja materiaali Helsinki, 1979 [16 s.] : nid. suomi 180.2 KIRJA / BOK *03VKR199000
+  h3. By author:
 
-%br
-%h3 Pagination for JSON format
-.pagination{:style => "margin-left:20px"}
-  %em {"current_page":1,"per_page":5,"total_entries":0,"entries":[]}
-  %p Every search result in json format will start always like in the example above.
-  %p If the number of 'total_entries' is bigger that the 'per_page' attribute, you can change the 'current_page' by adding to the end of the url '&page=[the number of the page you wish to view]' like in the example bellow:
-  %em http://localhost:3000/search/title.json?query=ja&page=2
-%br
-%br
+  Example url
 
+  _http://localhost:3000/search/author.json?query=Campbell_
+  *OR*
+  _http://localhost:3000/search/author.marcxml?query=Campbell_
+      
+  h3. By title:
+
+  Example url
+
+  _http://localhost:3000/search/title.json?query=raportti_
+  *OR*
+  _http://localhost:3000/search/title.marcxml?query=raportti_
+    
+  h3. By ISBN:
   
+  Example url
+
+  _http://localhost:3000/search/isbn.json?query=6420614617953_
+  *OR*
+  _http://localhost:3000/search/isbn.marcxml?query=6420614617953_
+
+  h2. Output
+
+  Depending on the format you requested in the url you can get:
   
+  h3. JSON
+
+  Output example
+
+= hilight :javascript, %s|{"current_page":1,"per_page":5,"total_entries":1,"entries":[{"leader":"00485nam  2200169   4500","title_main":"\u00e4misty\u00f6ryhm\u00e4n raportti 1 :","helmet_id":"kr2043314X","author_main":null,"author_group":["Helsingin kaupunki."],"author":[],"description":["[16 s.] :"]}]}|
+  
+:textile
+  h3. MARCXML
+
+  Output example
+
+= hilight :xml, %s|<record><stuff></stuff><record>|
+
+:textile
+  h2. Pagination for JSON format
+
+= hilight :javascript, %s|{"current_page":1,"per_page":5,"total_entries":0,"entries":[]}|
+
+:textile
+  Every search result in json format will start always like in the example above.
+
+  If the number of '_total_entries_' is bigger that the '_per_page_' attribute, you can change the '_current_page_' by adding to the end of the url '_&page=[the number of the page you wish to view]_' like in the example bellow:
+  _http://localhost:3000/search/title.json?query=ja&page=2_
+

@@ -1,16 +1,18 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.3'
+gem 'rails', '3.0.5'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'pg'
-gem 'nokogiri'
-gem 'haml-rails'
+gem 'pg', '0.10.0'
+gem 'nokogiri', '1.4.4'
+gem 'haml-rails', '0.3.4'
 gem 'will_paginate'
-gem 'pg_search'
-gem 'will_paginate'
+gem 'pg_search', '0.1.1'
+gem 'highlight', '1.1.2'
+gem 'RedCloth', '4.2.3'
+gem 'coderay', '0.9.7'
 
 # Use unicorn as the web server
 # gem 'unicorn'
