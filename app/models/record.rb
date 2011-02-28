@@ -4,6 +4,8 @@ class Record < ActiveRecord::Base
   pg_search_scope :search_by_isbn, :against => :isbn
   pg_search_scope :search_by_title, :against => :title_main
   pg_search_scope :search_by_author, :against => :author_main
+  
+  validates_uniqueness_of :helmet_id
 
   def name
     data_fields.where(:tag => "245").first.subfields.where(:code => "a").first.try(:value)
