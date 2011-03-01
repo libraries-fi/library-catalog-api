@@ -2,7 +2,7 @@ class RecordsController < ApplicationController
   respond_to :json
   
   def index
-    @records = Record.paginate(:page => params[:page])
+    @records = Record.all.paginate(:page => params[:page])
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @records.to_xml(:include => :data_fields, :except => [:created_at, :updated_at]) }
@@ -17,4 +17,5 @@ class RecordsController < ApplicationController
       format.xml  { render :xml => @record.to_xml(:include => :data_fields, :except => [:created_at, :updated_at]) }
     end
   end
+  
 end

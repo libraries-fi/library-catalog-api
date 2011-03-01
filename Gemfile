@@ -13,6 +13,7 @@ gem 'pg_search', '0.1.1'
 gem 'highlight', '1.1.2'
 gem 'RedCloth', '4.2.3'
 gem 'coderay', '0.9.7'
+gem 'httparty'
 
 # Use unicorn as the web server
 # gem 'unicorn'
