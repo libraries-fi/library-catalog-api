@@ -4,19 +4,15 @@ class ApplicationController < ActionController::Base
   private
 
   def records_as_json(records, jsonp = nil)
-    json = {:records => records.map(&:json)}
+    json = "\"records\":[#{records.map(&:json).join(",")}]"
     if records.respond_to? :current_page
-      json.merge({
-        :current_page => records.current_page,
-        :per_page => records.per_page,
-        :total_entries => records.total_entries
-      })
+      json = json + ",\"current_page\":#{records.current_page},\"per_page\":#{records.per_page},\"total_entries\":#{records.total_entries}"
     end
 
     if jsonp
-      "#{jsonp}(#{json.to_json})"
+      "#{jsonp}({#{json.to_json}})"
     else
-      json.to_json
+      "{" + json + "}"
     end
   end
 
