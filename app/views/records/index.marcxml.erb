@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <collection xmlns="http://www.loc.gov/MARC21/slim">
+  <%- if @records.respond_to?(:next_page) && !@records.next_page.nil? -%>
+    <link rel="next" href="<%= url_for(params.merge(:page => @records.next_page, :only_path => false)) %>"/>
+  <%- end -%>
+  <%- if @records.respond_to?(:previous_page) && !@records.previous_page.nil? -%>
+    <link rel="previous" href="<%= url_for(params.merge(:page => @records.previous_page, :only_path => false)) %>"/>
+  <%- end -%>
   <%= raw @records.map(&:marcxml).join("\n") %>
 </collection>
