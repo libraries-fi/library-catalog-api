@@ -41,6 +41,10 @@ class Record < ActiveRecord::Base
     end
   end
 
+  def to_param
+    helmet_id
+  end
+
   private
 
   def parsed_xml
