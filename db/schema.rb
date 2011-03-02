@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110223124401) do
+ActiveRecord::Schema.define(:version => 20110302084812) do
 
   create_table "data_fields", :force => true do |t|
     t.string   "tag"
@@ -31,12 +31,20 @@ ActiveRecord::Schema.define(:version => 20110223124401) do
     t.string   "helmet_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "marcxml"
+    t.text     "json"
   end
 
   create_table "subfields", :force => true do |t|
     t.string   "value"
     t.string   "code"
     t.integer  "data_field_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "titles", :force => true do |t|
+    t.string   "permalink"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

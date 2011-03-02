@@ -2,6 +2,30 @@ require "marcxml_parser"
 
 task :default => :parse_marcxml
 
+desc "Put MARCXML documents to the database"
+task :load_marcxml_files => :environment do
+  file_name = ENV["FILE"]
+
+  unless file_name
+    p "Pass wanted file with environment variable FILE. Example: rake load_marcxml_files FILE=marcxml_file.xml"
+  end
+
+  file = File.new(file_name)
+  # Get past xml and collection declaration
+  file.gets
+  file.gets
+  record_data = ""
+  while line = file.gets
+    record_data << line
+    if line.match(/<\/record>/)
+      record = Record.new(:marcxml => record_data)
+      record.generate_json
+      record.save!
+      record_data = ""
+    end
+  end
+end
+
 desc "Parse MARCXML file to database."
 task :parse_marcxml => :environment do
   filename = "#{Rails.root}/lib/tasks/helmet_catalog_0001.xml"

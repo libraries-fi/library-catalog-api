@@ -5,7 +5,7 @@ class RecordsController < ApplicationController
     @records = Record.all.paginate(:page => params[:page])
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @records.to_xml(:include => :data_fields, :except => [:created_at, :updated_at]) }
+      format.xml # index.xml.erb
     end
   end
 

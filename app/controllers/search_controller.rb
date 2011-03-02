@@ -28,21 +28,22 @@ class SearchController < ApplicationController
           :current_page => @records.current_page,
           :per_page => @records.per_page,
           :total_entries => @records.total_entries,
-          :entries => @records.map do |record|
-            {
-              :leader => record.data_fields.where(:field_type => "leader").first.value,
-              :title_main => record.title_main,
-              :helmet_id => record.helmet_id,
-              :author_main => record.author_main,
-              :author_group => record.data_fields.where(:tag => "110").map do |data_field|
-                data_field.subfields.where(:code => "a").map(&:value).join(", ")
-              end,
-              :author => record.data_fields.where(:tag => "700").map do |data_field|
-                data_field.subfields.where("code = 'a' OR code = 'e'").map(&:value)
-              end,
-              :description => record.data_fields.where(:tag => "300").map do |data_field|
-                data_field.subfields.where("code = 'a'").first.value
-              end,
+          :records => @records.map do |record|
+            record.json
+            # {
+            #   :leader => record.data_fields.where(:field_type => "leader").first.value,
+            #   :title_main => record.title_main,
+            #   :helmet_id => record.helmet_id,
+            #   :author_main => record.author_main,
+            #   :author_group => record.data_fields.where(:tag => "110").map do |data_field|
+            #     data_field.subfields.where(:code => "a").map(&:value).join(", ")
+            #   end,
+            #   :author => record.data_fields.where(:tag => "700").map do |data_field|
+            #     data_field.subfields.where("code = 'a' OR code = 'e'").map(&:value)
+            #   end,
+            #   :description => record.data_fields.where(:tag => "300").map do |data_field|
+            #     data_field.subfields.where("code = 'a'").first.value
+            #   end,
               # :leader => record.data_fields.where("field_type = 'leader'").first.value,
               # :controlfields => record.data_fields.where("field_type = 'controlfield'").map do |controlfield|
               #   {
@@ -63,7 +64,7 @@ class SearchController < ApplicationController
               #     end,
               #   }
               # end,
-            }
+            # }
           end
         }
       }
