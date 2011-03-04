@@ -1,10 +1,38 @@
+body {
+  background: url("../images/bg.png") !important;
+}
+
+.logo {
+  width: 62px;
+  height: 102px;
+  background: url("../images/logo.png");
+  float: left;
+  margin-right: 25px;
+}
+
+h1, h2 {
+  font-family: Helvetica !important;
+  font-weight: 200;
+  margin-top: 25px !important;
+  margin-bottom: 0 !important;
+}
+
+h2 {
+  font-size: 22px !important;
+  margin-top: 0 !important;
+}
+
+hr {
+  margin-top: 40px;
+}
+
 #navigation {
   margin-bottom: 30px;
   list-style: none;
 }
 
 #navigation li {
-  margin: 0 30px 0 0;
+  margin: 0 20px 0 0;
   display: inline-block;
 }
 
