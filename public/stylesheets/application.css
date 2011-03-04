@@ -20,10 +20,15 @@ h1, h2 {
 h2 {
   font-size: 22px !important;
   margin-top: 0 !important;
+  background: rgba(0, 0, 0, 0.1) !important;
+  padding: 4px !important;
 }
 
 hr {
   margin-top: 40px;
+}
+
+p em {
 }
 
 #navigation {
@@ -38,4 +43,9 @@ hr {
 
 a {
   color: #3465a4;
+}
+
+input[type="text"] {
+  width: 220px;
+  padding: 4px;
 }

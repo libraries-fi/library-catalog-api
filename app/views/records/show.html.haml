@@ -1,20 +1,18 @@
-%h1= @record.name
-%h2= @record.other_name
+%h3= @record.name
+%p= "Helmet id: " + @record.helmet_id
+%p= "Author main: " + @record.author_main if @record.author_main
+%p= "Title main: " + @record.title_main if @record.title_main
+%p
+  = "ISBN: " + @record.isbn if @record.isbn
 
-- @record.data_fields.each do |data_field|
-  %p
-    - if data_field.field_type.present?
-      = data_field.field_type.capitalize + ": "
-    - if data_field.value.present? && data_field.field_type != "datafield"
-      = "Value: " + data_field.value
-    - if data_field.tag.present?
-      = "Tag: " + data_field.tag + ", "
-    - if data_field.ind1.present?
-      = "Ind1: " + data_field.ind1 + ", "
-    - if data_field.ind2.present?
-      = "Ind2: " + data_field.ind2 + ", "
-    - if data_field.subfields.any?
-      - data_field.subfields.each do |subfield|
-        = "Subfield: " + "code: " + subfield.code + ", " + "value: " + subfield.value + ", "
+%p
+  Show record in 
+  = link_to "JSON", params.merge(:format => :json)
+  or
+  = link_to "MARCXML", params.merge(:format => :marcxml)
+  format.
+
+%br
+%p= link_to "Back", :back
       
     

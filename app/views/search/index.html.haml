@@ -1,3 +1,15 @@
-%h1 Tulokset
-
-= render "shared/records"
+= render "shared/search"
+- if @records.any?
+  %h3 Tulokset
+  = render "shared/records"
+  %br
+  %p
+    Show results in 
+    = link_to "JSON", params.merge(:format => :json)
+    or
+    = link_to "MARCXML", params.merge(:format => :marcxml)
+    format.
+- else
+  %p{:style => "padding-top: 20px"} 
+    So records matched the search query:
+    %em= "'" + params[:query] + "'"

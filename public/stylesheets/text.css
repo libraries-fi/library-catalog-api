@@ -44,9 +44,9 @@ h2 {
 }
 
 h3 {
-	font-size: 20px;
-	background: rgba(0, 0, 0, 0.1);
+	font-size: 18px;
 	padding: 4px;
+	font-weight: 200;
 }
 
 h4 {
