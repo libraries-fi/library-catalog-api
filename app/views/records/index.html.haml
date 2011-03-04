@@ -1,16 +1,6 @@
-= form_tag isbn_search_path, :method => :get do 
+= form_tag title_search_path, :method => :get do 
   = text_field_tag :query, nil, :placeholder => 'Search by title...'
   = submit_tag "Search"
 %h1 Aineisto
 
-%table
-  %tr
-    %th Nimeke
-    %th Alanimeke
-
-    - @records.each do |record|
-      %tr
-        %td= link_to record.name, record
-        %td= record.other_name
-
-= will_paginate @records
+= render "shared/records"

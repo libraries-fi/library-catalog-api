@@ -6,9 +6,14 @@ class RecordsController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render :json => records_as_json(@records) }
+      format.json { 
+        if params[:jsonp]
+          render :js => records_as_json(@records, params[:jsonp])
+        else
+          render :json => records_as_json(@records)
+        end
+      }
       format.marcxml # index.xml.erb
-      format.jsonp { render :js => records_as_json(@records, true) }
     end
   end
 
@@ -17,9 +22,14 @@ class RecordsController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render :json => record_as_json(@record) }
+      format.json {
+        if params[:jsonp]
+          render :js => record_as_json(@records, params[:jsonp])
+        else
+          render :json => record_as_json(@record)
+        end
+      }
       format.marcxml # show.xml.erb
-      format.jsonp { render :js => records_as_json(@records, true) }
     end
   end
   

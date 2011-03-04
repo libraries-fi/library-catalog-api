@@ -1,0 +1,11 @@
+%table
+  %tr
+    %th Nimeke
+    %th Alanimeke
+
+    - @records.each do |record|
+      %tr
+        %td= link_to record.name, record
+        %td= record.other_name
+
+= will_paginate @records
