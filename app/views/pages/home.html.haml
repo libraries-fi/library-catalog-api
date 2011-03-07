@@ -15,25 +15,25 @@
 
   Example url
 
-  _http://kirjasto-api.heroku.com/search/author.json?query=Campbell_
+  _http://#{HOST}/search/author.json?query=Campbell_
   *OR*
-  _http://kirjasto-api.heroku.com/search/author.marcxml?query=Campbell_
+  _http://#{HOST}/search/author.marcxml?query=Campbell_
       
   h3. By title:
 
   Example url
 
-  _http://kirjasto-api.heroku.com/search/title.json?query=raportti_
+  _http://#{HOST}/search/title.json?query=raportti_
   *OR*
-  _http://kirjasto-api.heroku.com/search/title.marcxml?query=raportti_
+  _http://#{HOST}/search/title.marcxml?query=raportti_
     
   h3. By ISBN:
   
   Example url
 
-  _http://kirjasto-api.heroku.com/search/isbn.json?query=6420614617953_
+  _http://#{HOST}/search/isbn.json?query=6420614617953_
   *OR*
-  _http://kirjasto-api.heroku.com/search/isbn.marcxml?query=6420614617953_
+  _http://#{HOST}/search/isbn.marcxml?query=6420614617953_
 
   h2. Output
 
@@ -125,6 +125,6 @@
 :textile
   Every search result in json format will start always like in the example above.
 
-  If the number of '_total_entries_' is bigger that the '_per_page_' attribute, you can change the '_current_page_' by adding to the end of the url '_&page=[the number of the page you wish to view]_' like in the example bellow:
-  _http://kirjasto-api.heroku.com/search/title.json?query=ja&page=2_
+  If the number of '_total_entries_' is bigger that the '_per_page_' attribute, you can change the '_current_page_' by adding to the end of the url '_&page=[the number of the page you wish to view]_' like in the example below:
+  _http://#{HOST}/search/title.json?query=ja&page=2_
 
