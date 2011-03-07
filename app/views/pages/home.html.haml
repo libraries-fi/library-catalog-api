@@ -1,15 +1,15 @@
 :textile
   h2. What
 
-  Currently the API is read-only.
+  This API exposes "HelMet Library data":http://data.kirjastot.fi and provides search results in JSON and MarcXML format.
 
-  This API uses "Helmet Library data":http://data.kirjastot.fi and provides search results in json, marcxml and jsonp format.
+  Currently the API is read-only.
 
   h2. How
 
   At the moment you can perform searches by: author, title or isbn.
 
-  Depending on the format you want the search result to be in, you can change the parameter "format" in the url to either 'json' or 'marcxml'
+  Depending on the format you want the search result to be in, you can change the file extension in the url to either <code>json</code> or <code>marcxml</code>. To get JSON results with JSONP, define callback function and add <code>&callback=[callback function name]</code> to the request string.
 
   h3. By author:
 
@@ -116,18 +116,32 @@
    <span class="nt">&lt;/record&gt;</span> 
   <span class="nt">&lt;/collection&gt;</span>
   </pre></div>
-  
 
 :textile
   h2. Pagination for JSON and MARCXML format
-= hilight :javascript, %s|{"current_page":1,"per_page":5,"total_entries":0,"entries":[]}|
+:textile
+
+  h3. JSON
+  
+:plain
+  <div class="highlight"><pre><span class="p">{</span>
+    <span class="s2">&quot;current_page&quot;</span><span class="o">:</span><span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;per_page&quot;</span><span class="o">:</span><span class="mi">5</span><span class="p">,</span>
+    <span class="s2">&quot;total_entries&quot;</span><span class="o">:</span><span class="mi">0</span><span class="p">,</span>
+    <span class="s2">&quot;entries&quot;</span><span class="o">:</span><span class="p">[]</span>
+  <span class="p">}</span>
+  </pre></div>
 
 :textile
   Every search result in json format will start always like in the example above.
 
-  If the number of '_total_entries_' is bigger that the '_per_page_' attribute, you can change the '_current_page_' by adding to the end of the url '_&page=[the number of the page you wish to view]_' like in the example below:
-  _http://#{HOST}/search/title.json?query=ja&page=2_
+  If the number of <code>total_entries</code> is bigger that the <code>per_page</code> attribute, you can change the <code>current_page</code> by adding to the end of the url <code>&page=[the number of the page you wish to view]</code> like in the example below:
+  <code>http://#{HOST}/search/title.json?query=ja&page=2</code>
 
+:textile
+  h3. MARCXML
+
+  Changing the parameter <code>page</code> the same way you would do for JSON format will give you the page you requested.
 
   h2. Examples
 
@@ -136,12 +150,43 @@
   You should probably use a JavaScript library to handle JSONP. Here is an example using "jQuery":http://jquery.com/ -library.
 
 :plain
-  TODO: Put example here.
+  <div class="highlight"><pre><span class="nx">$</span><span class="p">.</span><span class="nx">getJSON</span><span class="p">(</span><span class="s1">&#39;http://localhost:3000/search/title.json?query=ja&amp;callback=?&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Define your own processing of the JSON...</span>
+    <span class="nx">process</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+  <span class="p">});</span>
+  </pre></div>
 
 :textile
 
   h3. JSON client with Ruby
 
-:plain
-  TODO: Put example here.
+  This example shows searching records by title and returning a parsed Ruby object. All needed libraries are included in the Ruby Standard Library.
 
+:plain
+  <div class="highlight"><pre><span class="nb">require</span> <span class="s2">&quot;net/http&quot;</span>
+  <span class="nb">require</span> <span class="s2">&quot;json&quot;</span>
+
+  <span class="k">class</span> <span class="nc">Helmet</span>
+    <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">search_by_title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+      <span class="n">request</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="o">::</span><span class="no">Get</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;/search/title.json?query=</span><span class="si">\#{</span><span class="no">CGI</span><span class="o">.</span><span class="n">escape</span><span class="p">(</span><span class="n">title</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+      <span class="n">http</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;localhost&quot;</span><span class="p">,</span> <span class="mi">3000</span><span class="p">)</span>
+      <span class="n">response</span> <span class="o">=</span> <span class="n">http</span><span class="o">.</span><span class="n">start</span> <span class="p">{</span> <span class="o">|</span><span class="n">http</span><span class="o">|</span> <span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">request</span><span class="p">)</span> <span class="p">}</span>
+      
+      <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">class</span><span class="o">.</span><span class="n">superclass</span> <span class="o">==</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTPSuccess</span>
+        <span class="k">return</span> <span class="no">JSON</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">)</span>
+      <span class="k">else</span>
+        <span class="k">raise</span> <span class="s2">&quot;HTTP request failed: </span><span class="si">\#{</span><span class="n">response</span><span class="o">.</span><span class="n">code</span><span class="si">}</span><span class="s2">&quot;</span>
+      <span class="k">end</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="no">Helmet</span><span class="o">.</span><span class="n">search_by_title</span><span class="p">(</span><span class="s2">&quot;ja&quot;</span><span class="p">)</span> <span class="c1"># Returns Ruby hash generated from the JSON</span>
+  </pre></div>
+  
+#footer
+  %hr
+    #copyright.left
+      © #{link_to "labs.kirjastot.fi", "http://labs.kirjastot.fi"}, labs (at) kirjastot.fi
+    #kisko.right
+      Yhteistyössä
+      = link_to "Kisko Labs", "http://kiskolabs.com"
