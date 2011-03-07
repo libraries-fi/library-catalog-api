@@ -24,8 +24,8 @@ class SearchController < ApplicationController
     respond_to do |format|
       format.html { render "index" }
       format.json {
-        if params[:jsonp]
-          render :js => records_as_json(@records, params[:jsonp])
+        if params[:callback]
+          render :js => records_as_json(@records, params[:callback])
         else
           render :json => records_as_json(@records)
         end
