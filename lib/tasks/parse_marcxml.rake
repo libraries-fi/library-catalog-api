@@ -23,6 +23,7 @@ task :load_marcxml_files => :environment do
       record.generate_json
       record.save!
       record_data = ""
+      print "."
     end
   end
 end
