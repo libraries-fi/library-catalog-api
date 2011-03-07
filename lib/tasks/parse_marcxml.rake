@@ -11,6 +11,8 @@ task :load_marcxml_files => :environment do
     p "Pass wanted file path (or URL) with environment variable FILE. Example: rake load_marcxml_files FILE=marcxml_file.xml"
   end
 
+  counter = 0
+
   file = open(file_name)
   # Get past xml and collection declaration
   file.gets
@@ -24,8 +26,13 @@ task :load_marcxml_files => :environment do
       record.save!
       record_data = ""
       print "."
+      counter += 1
     end
   end
+
+  p
+  p "-" * 30
+  puts "Added #{counter} records."
 end
 
 desc "Parse MARCXML file to database."
