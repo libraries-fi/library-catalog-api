@@ -25,7 +25,11 @@ task :load_marcxml_files => :environment do
       record.generate_json
       record.save!
       record_data = ""
-      print "."
+      if record.helmet_id.blank? || record.title_main.blank? || record.author_main.blank?
+        print "\e[31m.\e[0m"
+      else
+        print "\e[32m.\e[0m"
+      end
       counter += 1
     end
   end
