@@ -1,0 +1,51 @@
+{
+  "records":
+    [
+      {
+        "leader":"01913ngm  2200505   4500",
+        "title_main":"007 ja kultainen ase :",
+        "helmet_id":"cls0134937",
+        "author_main":"Hamilton, Guy",
+        "author_group":[
+          "Hamilton, Guy",
+          "Fleming, Ian.",
+          "Maibaum, Richard",
+          "Mankiewicz, Tom",
+          "Moore, Ted",
+          "Adams, Maud"],
+        "description":["1 DVD-levy (120 min) :"]
+      },
+      {
+        "leader":"01198ngm  2200373   4500",
+        "title_main":"007 ja kultainen ase /",
+        "helmet_id":"kr30764009",
+        "author_main":"Hamilton, Guy",
+        "author_group":[
+          "Hamilton, Guy",
+          "Maibaum, Richard",
+          "Mankiewicz, Tom",
+          "Fleming, Ian.",
+          "Moore, Roger",
+          "Ekland, Britt"],
+        "description":["1 videokas. (2 h 5 min) :"]
+      },
+      {
+        "leader":"01524ngm  2200409   4500",
+        "title_main":"007 ja kuoleman katse :",
+        "helmet_id":"cls0133420",
+        "author_main":"Glen, John",
+        "author_group":[
+          "Glen, John",
+          "Maibaum, Richard",
+          "Wilson, Michael G.",
+          "Barry, John",
+          "Moore, Roger",
+          "Roberts, Tanya",
+          "Jones, Grace"],
+        "description":["1 DVD-levy (2 h 7 min) :"]
+      },
+    ],
+  "current_page":1,
+  "per_page":5,
+  "total_entries":9
+}

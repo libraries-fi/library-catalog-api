@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<collection xmlns="http://www.loc.gov/MARC21/slim"> 
+    <link rel="next" href="http://localhost:3000/search/title.marcxml?commit=Search&amp;page=2&amp;query=ja&amp;utf8=%E2%9C%93"/> 
+   <record> 
+  <leader>01913ngm  2200505   4500</leader> 
+  <controlfield tag="001">cls0134937</controlfield> 
+  <controlfield tag="008">011214q2001    xx                ||mul  </controlfield> 
+  <datafield tag="024" ind1="3" ind2=" "> 
+   <subfield code="a">6420614617953</subfield> 
+  </datafield> 
+  <datafield tag="028" ind1="0" ind2="1"> 
+   <subfield code="b">MGM DVD</subfield> 
+   <subfield code="a">16197-58</subfield> 
+  </datafield> 
+  <datafield tag="035" ind1=" " ind2=" "> 
+   <subfield code="a">(FI-HELMET)b1000003</subfield> 
+  </datafield> 
+  <datafield tag="041" ind1="1" ind2=" "> 
+   <subfield code="a">finswenordanengporpolgerspa</subfield> 
+   <subfield code="h">(eng)</subfield> 
+  </datafield> 
+  <datafield tag="245" ind1="1" ind2="0"> 
+   <subfield code="a">007 ja kultainen ase :</subfield> 
+   <subfield code="b">special 007 edition  /</subfield> 
+   <subfield code="c">directed by Guy Hamilton ; screenplay by Richard Maibaum and Tom Mankiewicz ; music by John Barry</subfield> 
+  </datafield> 
+  <datafield tag="260" ind1=" " ind2=" "> 
+   <subfield code="a">Helsinki :</subfield> 
+   <subfield code="b">FS Film [jakaja],</subfield> 
+   <subfield code="c">[2001]</subfield> 
+  </datafield> 
+  <datafield tag="300" ind1=" " ind2=" "> 
+   <subfield code="a">1 DVD-levy (120 min) :</subfield> 
+   <subfield code="b">vär.</subfield> 
+  </datafield> 
+  <datafield tag="440" ind1=" " ind2="0"> 
+   <subfield code="a">007</subfield> 
+  </datafield> 
+  <datafield tag="500" ind1=" " ind2=" "> 
+   <subfield code="a">Perustuu Ian Flemingin romaaniin. - Ääniraita englanti, ääniraita saksa, ääniraita espanja</subfield> 
+  </datafield> 
+  <datafield tag="505" ind1="0" ind2=" "> 
+   <subfield code="a">Sisältää runsasti lisämateriaalia, mm. dokumentin Inside The man with the golden gun</subfield> 
+  </datafield> 
+  <datafield tag="506" ind1=" " ind2=" "> 
+   <subfield code="a">K15, T-83387. - Lainausoikeus</subfield> 
+  </datafield> 
+  <datafield tag="511" ind1="0" ind2=" "> 
+   <subfield code="a">Rooleissa: Roger Moore, Christopher Lee, Britt Ekland</subfield> 
+  </datafield> 
+  <datafield tag="534" ind1=" " ind2=" "> 
+   <subfield code="c">Danjaq : United Artists, 1974</subfield> 
+  </datafield> 
+  <datafield tag="546" ind1=" " ind2=" "> 
+   <subfield code="a">Tekstitys: suomi, svenska, norja, tanska, englanti, portugali, puola, saksa, espanja sekä saksa kuulovammaisille, ääniraita: monikielinen</subfield> 
+  </datafield> 
+  <datafield tag="574" ind1=" " ind2=" "> 
+   <subfield code="a">Kipa</subfield> 
+   <subfield code="b">0204helaik</subfield> 
+  </datafield> 
+  <datafield tag="575" ind1=" " ind2=" "> 
+   <subfield code="a">eaunola</subfield> 
+   <subfield code="b">0203espaik</subfield> 
+  </datafield> 
+  <datafield tag="588" ind1=" " ind2=" "> 
+   <subfield code="a">1.4</subfield> 
+  </datafield> 
+  <datafield tag="589" ind1=" " ind2=" "> 
+   <subfield code="a">2.4</subfield> 
+  </datafield> 
+  <datafield tag="599" ind1=" " ind2=" "> 
+   <subfield code="a">DVDLEVY / DVDSKIVA</subfield> 
+  </datafield> 
+  <datafield tag="600" ind1="1" ind2="4"> 
+   <subfield code="a">Bond, James</subfield> 
+  </datafield> 
+  <datafield tag="650" ind1=" " ind2="4"> 
+   <subfield code="a">jännityselokuvat</subfield> 
+  </datafield> 
+  <datafield tag="650" ind1=" " ind2="4"> 
+   <subfield code="a">vakoiluelokuvat</subfield> 
+  </datafield> 
+  <datafield tag="650" ind1=" " ind2="4"> 
+   <subfield code="a">toimintaelokuvat</subfield> 
+  </datafield> 
+  <datafield tag="650" ind1=" " ind2="4"> 
+   <subfield code="a">elokuvat</subfield> 
+  </datafield> 
+  <datafield tag="650" ind1=" " ind2="4"> 
+   <subfield code="a">1970-luku</subfield> 
+  </datafield> 
+  <datafield tag="651" ind1=" " ind2="4"> 
+   <subfield code="a">Iso-Britannia</subfield> 
+  </datafield> 
+  <datafield tag="700" ind1="1" ind2=" "> 
+   <subfield code="a">Hamilton, Guy</subfield> 
+   <subfield code="e">(ohj.)</subfield> 
+  </datafield> 
+  <datafield tag="700" ind1="1" ind2=" "> 
+   <subfield code="a">Fleming, Ian.</subfield> 
+  </datafield> 
+  <datafield tag="700" ind1="1" ind2=" "> 
+   <subfield code="a">Maibaum, Richard</subfield> 
+   <subfield code="e">(käsik.)</subfield> 
+  </datafield> 
+  <datafield tag="700" ind1="1" ind2=" "> 
+   <subfield code="a">Mankiewicz, Tom</subfield> 
+   <subfield code="e">(käsik.)</subfield> 
+  </datafield> 
+  <datafield tag="700" ind1="1" ind2=" "> 
+   <subfield code="a">Moore, Ted</subfield> 
+   <subfield code="e">(kuv.)</subfield> 
+  </datafield> 
+  <datafield tag="700" ind1="1" ind2=" "> 
+   <subfield code="a">Morris, Oswald</subfield> 
+   <subfield code="e">(kuv.)</subfield> 
+  </datafield> 
+  <datafield tag="700" ind1="1" ind2=" "> 
+   <subfield code="a">Barry, John</subfield> 
+   <subfield code="e">(säv.)</subfield> 
+  </datafield> 
+  <datafield tag="700" ind1="1" ind2=" "> 
+   <subfield code="a">Moore, Roger</subfield> 
+   <subfield code="e">(näytt.)</subfield> 
+  </datafield> 
+  <datafield tag="700" ind1="1" ind2=" "> 
+   <subfield code="a">Lee, Christopher</subfield> 
+   <subfield code="e">(näytt.)</subfield> 
+  </datafield> 
+  <datafield tag="700" ind1="1" ind2=" "> 
+   <subfield code="a">Ekland, Britt</subfield> 
+   <subfield code="e">(näytt.)</subfield> 
+  </datafield> 
+  <datafield tag="700" ind1="1" ind2=" "> 
+   <subfield code="a">Adams, Maud</subfield> 
+   <subfield code="e">(näytt.)</subfield> 
+  </datafield> 
+  <datafield tag="740" ind1="0" ind2=" "> 
+   <subfield code="a">Inside The man with the golden gun</subfield> 
+  </datafield> 
+  <datafield tag="765" ind1="0" ind2=" "> 
+   <subfield code="t">The man with the golden gun</subfield> 
+  </datafield> 
+ </record> 
+ 
+ <record> 
+  <leader>01198ngm  2200373   4500</leader> 
+  <controlfield tag="001">kr30764009</controlfield> 
+  <controlfield tag="008">921231s1992    xx                ||fin  </controlfield> 
+  <datafield tag="035" ind1=" " ind2=" "> 
+   <subfield code="a">(FI-HELMET)b1000004</subfield> 
+  </datafield> 
+  <datafield tag="041" ind1="1" ind2=" "> 
+   <subfield code="a">fineng</subfield> 
+   <subfield code="h">(eng)</subfield> 
+  </datafield> 
+  <datafield tag="245" ind1="1" ind2="0"> 
+   <subfield code="a">007 ja kultainen ase /</subfield> 
+   <subfield code="c">directed by Guy Hamilton ; screenplay by Richard Maibaum and Tom Mankiewicz ; music score by John Barry ; perustuu Ian Flemingin teokseen</subfield> 
+  </datafield> 
+  <datafield tag="260" ind1=" " ind2=" "> 
+   <subfield code="a">Espoo :</subfield> 
+   <subfield code="b">Fazer Video,</subfield> 
+   <subfield code="c">1992</subfield> 
+  </datafield> 
+  <datafield tag="300" ind1=" " ind2=" "> 
+   <subfield code="a">1 videokas. (2 h 5 min) :</subfield> 
+   <subfield code="b">vär.</subfield> 
+  </datafield> 
+  <datafield tag="506" ind1=" " ind2=" "> 
+   <subfield code="a">K15, T-83387. - Lainausoikeus</subfield> 
+  </datafield> 
+  <datafield tag="511" ind1="0" ind2=" "> 
+   <subfield code="a">Pääosissa: Roger Moore, Christopher Lee, Britt Ekland</subfield> 
+  </datafield> 
+  <datafield tag="534" ind1=" " ind2=" "> 
+   <subfield code="c">Danjaq, 1974</subfield> 
+  </datafield> 
+  <datafield tag="546" ind1=" " ind2=" "> 
+   <subfield code="a">Tekstitys: suomi, ääniraita: englanti</subfield> 
+  </datafield> 
+  <datafield tag="575" ind1=" " ind2=" "> 
+   <subfield code="a">Luett. EL</subfield> 
+  </datafield> 
+  <datafield tag="575" ind1=" " ind2=" "> 
+   <subfield code="a">Kipa</subfield> 
+  </datafield> 
+  <datafield tag="588" ind1=" " ind2=" "> 
+   <subfield code="a">1.4</subfield> 
+  </datafield> 
+  <datafield tag="589" ind1=" " ind2=" "> 
+   <subfield code="a">2.4</subfield> 
+  </datafield> 
+  <datafield tag="590" ind1=" " ind2=" "> 
+   <subfield code="a">1.4</subfield> 
+  </datafield> 
+  <datafield tag="599" ind1=" " ind2=" "> 
+   <subfield code="a">VIDEO</subfield> 
+  </datafield> 
+  <datafield tag="600" ind1="1" ind2="4"> 
+   <subfield code="a">Bond, James</subfield> 
+  </datafield> 
+  <datafield tag="650" ind1=" " ind2="4"> 
+   <subfield code="a">rikoselokuvat</subfield> 
+  </datafield> 
+  <datafield tag="650" ind1=" " ind2="4"> 
+   <subfield code="a">elokuvat</subfield> 
+  </datafield> 
+  <datafield tag="650" ind1=" " ind2="4"> 
+   <subfield code="a">1970-luku</subfield> 
+  </datafield> 
+  <datafield tag="651" ind1=" " ind2="4"> 
+   <subfield code="a">Iso-Britannia</subfield> 
+  </datafield> 
+  <datafield tag="700" ind1="1" ind2=" "> 
+   <subfield code="a">Hamilton, Guy</subfield> 
+   <subfield code="e">(ohj.)</subfield> 
+  </datafield> 
+  <datafield tag="700" ind1="1" ind2=" "> 
+   <subfield code="a">Maibaum, Richard</subfield> 
+   <subfield code="e">(käsik.)</subfield> 
+  </datafield> 
+  <datafield tag="700" ind1="1" ind2=" "> 
+   <subfield code="a">Mankiewicz, Tom</subfield> 
+   <subfield code="e">(käsik.)</subfield> 
+  </datafield> 
+  <datafield tag="700" ind1="1" ind2=" "> 
+   <subfield code="a">Fleming, Ian.</subfield> 
+  </datafield> 
+  <datafield tag="700" ind1="1" ind2=" "> 
+   <subfield code="a">Moore, Roger</subfield> 
+   <subfield code="e">(näytt.)</subfield> 
+  </datafield> 
+  <datafield tag="700" ind1="1" ind2=" "> 
+   <subfield code="a">Lee, Christopher</subfield> 
+   <subfield code="e">(näytt.)</subfield> 
+  </datafield> 
+  <datafield tag="700" ind1="1" ind2=" "> 
+   <subfield code="a">Ekland, Britt</subfield> 
+   <subfield code="e">(näytt.)</subfield> 
+  </datafield> 
+  <datafield tag="765" ind1="0" ind2=" "> 
+   <subfield code="t">The man with the golden gun</subfield> 
+  </datafield> 
+ </record> 
+ 
+ <record> 
+  <leader>01524ngm  2200409   4500</leader> 
+  <controlfield tag="001">cls0133420</controlfield> 
+  <controlfield tag="008">930804q2001    xx                  mul  </controlfield> 
+  <datafield tag="028" ind1="0" ind2="1"> 
+   <subfield code="a">16234-58Z14</subfield> 
+  </datafield> 
+  <datafield tag="035" ind1=" " ind2=" "> 
+   <subfield code="a">(FI-HELMET)b1000005</subfield> 
+  </datafield> 
+  <datafield tag="041" ind1="1" ind2=" "> 
+   <subfield code="a">finswenordanengfredutporpolgrehunturheb</subfield> 
+   <subfield code="h">(eng)</subfield> 
+  </datafield> 
+  <datafield tag="245" ind1="1" ind2="0"> 
+   <subfield code="a">007 ja kuoleman katse :</subfield> 
+   <subfield code="b">special 007 edition  /</subfield> 
+   <subfield code="c">directed by John Glen ; screenplay by Richard Maibaum ja Michael G. Wilson ; music by John Barry</subfield> 
+  </datafield> 
+  <datafield tag="260" ind1=" " ind2=" "> 
+   <subfield code="a">Helsinki :</subfield> 
+   <subfield code="b">FS Film,</subfield> 
+   <subfield code="c">[2001]</subfield> 
+  </datafield> 
+  <datafield tag="300" ind1=" " ind2=" "> 
+   <subfield code="a">1 DVD-levy (2 h 7 min) :</subfield> 
+   <subfield code="b">vär.</subfield> 
+  </datafield> 
+  <datafield tag="500" ind1=" " ind2=" "> 
+   <subfield code="a">Perustuu Ian Flemingin luomaan hahmoon. - Ääniraita englanti</subfield> 
+  </datafield> 
+  <datafield tag="506" ind1=" " ind2=" "> 
+   <subfield code="a">K15, T-92915. - Lainausoikeus</subfield> 
+  </datafield> 
+  <datafield tag="511" ind1="0" ind2=" "> 
+   <subfield code="a">Pääosissa: Roger Moore, Tanya Roberts, Grace Jones</subfield> 
+  </datafield> 
+  <datafield tag="534" ind1=" " ind2=" "> 
+   <subfield code="c">Danjaq, cop. 1985</subfield> 
+  </datafield> 
+  <datafield tag="546" ind1=" " ind2=" "> 
+   <subfield code="a">Tekstitys: suomi, svenska, norja, tanska, englanti, ranska, hollanti, portugali, puola, kreikka, unkari, turkki, heprea sekä englanti kuulovammaisille, ääniraita: englanti</subfield> 
+  </datafield> 
+  <datafield tag="574" ind1=" " ind2=" "> 
+   <subfield code="a">Tibo</subfield> 
+  </datafield> 
+  <datafield tag="575" ind1=" " ind2=" "> 
+   <subfield code="a">eaunola</subfield> 
+   <subfield code="b">0203espaik</subfield> 
+  </datafield> 
+  <datafield tag="588" ind1=" " ind2=" "> 
+   <subfield code="a">1.4</subfield> 
+  </datafield> 
+  <datafield tag="589" ind1=" " ind2=" "> 
+   <subfield code="a">2.4</subfield> 
+  </datafield> 
+  <datafield tag="599" ind1=" " ind2=" "> 
+   <subfield code="a">DVDLEVY / DVDSKIVA</subfield> 
+  </datafield> 
+  <datafield tag="600" ind1="1" ind2="4"> 
+   <subfield code="a">Bond, James</subfield> 
+  </datafield> 
+  <datafield tag="650" ind1=" " ind2="4"> 
+   <subfield code="a">jännityselokuvat</subfield> 
+  </datafield> 
+  <datafield tag="650" ind1=" " ind2="4"> 
+   <subfield code="a">toimintaelokuvat</subfield> 
+  </datafield> 
+  <datafield tag="650" ind1=" " ind2="4"> 
+   <subfield code="a">vakoiluelokuvat</subfield> 
+  </datafield> 
+  <datafield tag="650" ind1=" " ind2="4"> 
+   <subfield code="a">elokuvat</subfield> 
+  </datafield> 
+  <datafield tag="650" ind1=" " ind2="4"> 
+   <subfield code="a">1980-luku</subfield> 
+  </datafield> 
+  <datafield tag="651" ind1=" " ind2="4"> 
+   <subfield code="a">Iso-Britannia</subfield> 
+  </datafield> 
+  <datafield tag="700" ind1="1" ind2=" "> 
+   <subfield code="a">Glen, John</subfield> 
+   <subfield code="e">(ohj.)</subfield> 
+  </datafield> 
+  <datafield tag="700" ind1="1" ind2=" "> 
+   <subfield code="a">Maibaum, Richard</subfield> 
+   <subfield code="e">(käsik.)</subfield> 
+  </datafield> 
+  <datafield tag="700" ind1="1" ind2=" "> 
+   <subfield code="a">Wilson, Michael G.</subfield> 
+   <subfield code="e">(käsik.)</subfield> 
+  </datafield> 
+  <datafield tag="700" ind1="1" ind2=" "> 
+   <subfield code="a">Barry, John</subfield> 
+   <subfield code="e">(säv.)</subfield> 
+  </datafield> 
+  <datafield tag="700" ind1="1" ind2=" "> 
+   <subfield code="a">Moore, Roger</subfield> 
+   <subfield code="e">(näytt.)</subfield> 
+  </datafield> 
+  <datafield tag="700" ind1="1" ind2=" "> 
+   <subfield code="a">Roberts, Tanya</subfield> 
+   <subfield code="e">(näytt.)</subfield> 
+  </datafield> 
+  <datafield tag="700" ind1="1" ind2=" "> 
+   <subfield code="a">Jones, Grace</subfield> 
+   <subfield code="e">(näytt.)</subfield> 
+  </datafield> 
+  <datafield tag="765" ind1="0" ind2=" "> 
+   <subfield code="t">A view to a kill</subfield> 
+  </datafield> 
+ </record> 
+ 
+ <record> 
+  <leader>00735nam  2200229   4500</leader> 
+  <controlfield tag="001">cls0033334</controlfield> 
+  <controlfield tag="005">20021115010101.0</controlfield> 
+  <controlfield tag="008">961220s1986    xx                  fin  </controlfield> 
+  <datafield tag="020" ind1=" " ind2=" "> 
+   <subfield code="a">(nid.)</subfield> 
+  </datafield> 
+  <datafield tag="035" ind1=" " ind2=" "> 
+   <subfield code="a">(FI-HELMET)b1000006</subfield> 
+  </datafield> 
+  <datafield tag="041" ind1="1" ind2=" "> 
+   <subfield code="a">fin</subfield> 
+   <subfield code="h">(eng)</subfield> 
+  </datafield> 
+  <datafield tag="245" ind1="1" ind2="0"> 
+   <subfield code="a">007 ja kuoleman katse :</subfield> 
+   <subfield code="b">sarjakuvaversio</subfield> 
+  </datafield> 
+  <datafield tag="260" ind1=" " ind2=" "> 
+   <subfield code="a">[Tampere] :</subfield> 
+   <subfield code="b">Semic,</subfield> 
+   <subfield code="c">cop. 1986</subfield> 
+  </datafield> 
+  <datafield tag="300" ind1=" " ind2=" "> 
+   <subfield code="a">50 s. :</subfield> 
+   <subfield code="b">kuv.</subfield> 
+  </datafield> 
+  <datafield tag="500" ind1=" " ind2=" "> 
+   <subfield code="a">Nimiösivulla teksti: Albert R. Broccoli esittää: Roger Moore on Ian Flemingin James Bond 007 a view to a kill, 007 ja kuoleman katse : sarjakuvaversio</subfield> 
+  </datafield> 
+  <datafield tag="546" ind1=" " ind2=" "> 
+   <subfield code="a">suomi</subfield> 
+  </datafield> 
+  <datafield tag="574" ind1=" " ind2=" "> 
+   <subfield code="a">Luett. Y. Lindegren</subfield> 
+  </datafield> 
+  <datafield tag="588" ind1=" " ind2=" "> 
+   <subfield code="a">1.791</subfield> 
+  </datafield> 
+  <datafield tag="599" ind1=" " ind2=" "> 
+   <subfield code="a">KIRJA / BOK</subfield> 
+  </datafield> 
+  <datafield tag="740" ind1="0" ind2=" "> 
+   <subfield code="a">James Bond 007 ja kuoleman katse</subfield> 
+  </datafield> 
+  <datafield tag="740" ind1="0" ind2=" "> 
+   <subfield code="a">Kuoleman katse</subfield> 
+  </datafield> 
+  <datafield tag="765" ind1="0" ind2=" "> 
+   <subfield code="t">A view to a kill</subfield> 
+  </datafield> 
+  <datafield tag="913" ind1="0" ind2="0"> 
+   <subfield code="a">*0JKKAT98000</subfield> 
+  </datafield> 
+ </record> 
+ 
+</collection>

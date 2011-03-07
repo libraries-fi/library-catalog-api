@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<collection xmlns="http://www.loc.gov/MARC21/slim"> 
+   <record> 
+  <leader>00485nam  2200169   4500</leader> 
+  <controlfield tag="001">kr2043314X</controlfield> 
+  <controlfield tag="005">20021115010101.0</controlfield> 
+  <controlfield tag="008">000905s1979    xx                  fin  </controlfield> 
+  <datafield tag="035" ind1=" " ind2=" "> 
+   <subfield code="a">(FI-HELMET)b1000002</subfield> 
+  </datafield> 
+  <datafield tag="041" ind1="0" ind2=" "> 
+   <subfield code="a">fin</subfield> 
+  </datafield> 
+  <datafield tag="110" ind1="1" ind2=" "> 
+   <subfield code="a">Helsingin kaupunki.</subfield> 
+   <subfield code="b">Lasten päivähoitovirasto</subfield> 
+  </datafield> 
+  <datafield tag="245" ind1="1" ind2="0"> 
+   <subfield code="a">0-3 -vuotiaiden kehittämistyöryhmän raportti 1 :</subfield> 
+   <subfield code="b">liite 1: välineistö ja materiaali</subfield> 
+  </datafield> 
+  <datafield tag="260" ind1=" " ind2=" "> 
+   <subfield code="a">Helsinki,</subfield> 
+   <subfield code="c">1979</subfield> 
+  </datafield> 
+  <datafield tag="300" ind1=" " ind2=" "> 
+   <subfield code="a">[16 s.] :</subfield> 
+   <subfield code="b">nid.</subfield> 
+  </datafield> 
+  <datafield tag="546" ind1=" " ind2=" "> 
+   <subfield code="a">suomi</subfield> 
+  </datafield> 
+  <datafield tag="588" ind1=" " ind2=" "> 
+   <subfield code="a">180.2</subfield> 
+  </datafield> 
+  <datafield tag="599" ind1=" " ind2=" "> 
+   <subfield code="a">KIRJA / BOK</subfield> 
+  </datafield> 
+  <datafield tag="913" ind1="0" ind2="0"> 
+   <subfield code="a">*03VKR199000</subfield> 
+  </datafield> 
+ </record> 
+</collection>
