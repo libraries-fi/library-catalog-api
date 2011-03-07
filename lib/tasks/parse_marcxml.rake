@@ -34,8 +34,8 @@ task :load_marcxml_files => :environment do
     end
   end
 
-  p
-  p "-" * 30
+  puts 
+  puts "-" * 30
   puts "Added #{counter} records."
 end
 
