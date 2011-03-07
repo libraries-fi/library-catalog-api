@@ -3,7 +3,7 @@
 
   Currently the API is read-only.
 
-  This API uses "Helmet Library data":http://data.kirjastot.fi and provides search results in json and marcxml format.
+  This API uses "Helmet Library data":http://data.kirjastot.fi and provides search results in json, marcxml and jsonp format.
 
   h2. How
 
@@ -15,25 +15,25 @@
 
   Example url
 
-  _http://localhost:3000/search/author.json?query=Campbell_
+  _http://kirjasto-api.heroku.com/search/author.json?query=Campbell_
   *OR*
-  _http://localhost:3000/search/author.marcxml?query=Campbell_
+  _http://kirjasto-api.heroku.com/search/author.marcxml?query=Campbell_
       
   h3. By title:
 
   Example url
 
-  _http://localhost:3000/search/title.json?query=raportti_
+  _http://kirjasto-api.heroku.com/search/title.json?query=raportti_
   *OR*
-  _http://localhost:3000/search/title.marcxml?query=raportti_
+  _http://kirjasto-api.heroku.com/search/title.marcxml?query=raportti_
     
   h3. By ISBN:
   
   Example url
 
-  _http://localhost:3000/search/isbn.json?query=6420614617953_
+  _http://kirjasto-api.heroku.com/search/isbn.json?query=6420614617953_
   *OR*
-  _http://localhost:3000/search/isbn.marcxml?query=6420614617953_
+  _http://kirjasto-api.heroku.com/search/isbn.marcxml?query=6420614617953_
 
   h2. Output
 
@@ -137,13 +137,12 @@
 = hilight :xml, %s|<record><stuff></stuff><record>|
 
 :textile
-  h2. Pagination for JSON format
-
+  h2. Pagination for JSON and MARCXML format
 = hilight :javascript, %s|{"current_page":1,"per_page":5,"total_entries":0,"entries":[]}|
 
 :textile
   Every search result in json format will start always like in the example above.
 
   If the number of '_total_entries_' is bigger that the '_per_page_' attribute, you can change the '_current_page_' by adding to the end of the url '_&page=[the number of the page you wish to view]_' like in the example bellow:
-  _http://localhost:3000/search/title.json?query=ja&page=2_
+  _http://kirjasto-api.heroku.com/search/title.json?query=ja&page=2_
 
