@@ -1,4 +1,5 @@
 require "marcxml_parser"
+require "open-uri"
 
 task :default => :parse_marcxml
 
@@ -7,10 +8,10 @@ task :load_marcxml_files => :environment do
   file_name = ENV["FILE"]
 
   unless file_name
-    p "Pass wanted file with environment variable FILE. Example: rake load_marcxml_files FILE=marcxml_file.xml"
+    p "Pass wanted file path (or URL) with environment variable FILE. Example: rake load_marcxml_files FILE=marcxml_file.xml"
   end
 
-  file = File.new(file_name)
+  file = open(file_name)
   # Get past xml and collection declaration
   file.gets
   file.gets
