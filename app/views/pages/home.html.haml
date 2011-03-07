@@ -128,3 +128,17 @@
   If the number of '_total_entries_' is bigger that the '_per_page_' attribute, you can change the '_current_page_' by adding to the end of the url '_&page=[the number of the page you wish to view]_' like in the example below:
   _http://#{HOST}/search/title.json?query=ja&page=2_
 
+
+  h2. Examples
+
+  h3. JSONP
+
+  Using JSONP is really easy using the "jQuery":http://jquery.com/ -library.
+
+:plain
+  <code><pre>
+  $.getJSON('http://#{HOST}/search/title.json?query=ja&callback=?', function(data) {
+    // Define your own processing of the JSON...
+    process(data);
+  });
+  </pre></code>
