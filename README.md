@@ -1,6 +1,6 @@
 ## Creating code examples
 
-Project uses Pygmentize to generate code examples in HTML.
+Project uses Pygmentize to generate code examples in HTML. Example files are in doc-directory.
 
 ### Generating stylesheet
 

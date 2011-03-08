@@ -1,4 +1,5 @@
 require "marcxml_parser"
+require "open-uri"
 
 task :default => :parse_marcxml
 
@@ -7,10 +8,12 @@ task :load_marcxml_files => :environment do
   file_name = ENV["FILE"]
 
   unless file_name
-    p "Pass wanted file with environment variable FILE. Example: rake load_marcxml_files FILE=marcxml_file.xml"
+    p "Pass wanted file path (or URL) with environment variable FILE. Example: rake load_marcxml_files FILE=marcxml_file.xml"
   end
 
-  file = File.new(file_name)
+  counter = 0
+
+  file = open(file_name)
   # Get past xml and collection declaration
   file.gets
   file.gets
@@ -22,8 +25,18 @@ task :load_marcxml_files => :environment do
       record.generate_json
       record.save!
       record_data = ""
+      if record.helmet_id.blank? || record.title_main.blank? || record.author_main.blank?
+        print "\e[31m.\e[0m"
+      else
+        print "\e[32m.\e[0m"
+      end
+      counter += 1
     end
   end
+
+  puts 
+  puts "-" * 30
+  puts "Added #{counter} records."
 end
 
 desc "Parse MARCXML file to database."

@@ -57,12 +57,15 @@ class Record < ActiveRecord::Base
       unless author_fields.empty?
         self.author_main = author_fields.first.css("subfield[code='a']").text
       end
-      self.title_main = parsed_xml.css("datafield[tag='245']").first.css("subfield[code='a']").text
-      isbn_fields = parsed_xml.css("datafield[tag='024'], datafield[tag='020']")
-      unless isbn_fields.empty?
-        self.isbn = isbn_fields.first.css("subfield").children.first.text
+      title_tag = parsed_xml.css("datafield[tag='245']").first
+      unless title_tag.nil?
+        self.title_main = title_tag.css("subfield[code='a']").text
       end
-      self.helmet_id = parsed_xml.css("controlfield[tag='001']").first.text
+      isbn_field = parsed_xml.css("datafield[tag='020']").first
+      unless isbn_field.nil?
+        self.isbn = isbn_field.css("subfield").children.first.text
+      end
+      self.helmet_id = parsed_xml.css("datafield[tag='035']").first.css("subfield[code='a']").text
     end
   end
 end

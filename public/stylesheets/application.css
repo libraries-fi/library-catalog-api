@@ -1,3 +1,11 @@
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
 body {
   background: url("../images/bg.png") !important;
 }
@@ -41,6 +49,10 @@ p em {
   display: inline-block;
 }
 
+#footer {
+  margin-bottom: 5em;
+}
+
 a {
   color: #3465a4;
 }
@@ -48,4 +60,16 @@ a {
 input[type="text"] {
   width: 220px;
   padding: 4px;
+}
+
+code {
+  font: 14px Monaco,"Courier New","DejaVu Sans Mono","Bitstream Vera Sans Mono",monospace !important;
+  -webkit-border-radius: 4px !important;
+  -moz-border-radius: 4px !important;
+  border-radius: 4px !important;
+  background: #FEFEFE !important;
+  border: 1px solid #CCC !important;
+  display: inline-block !important;
+  color: #52595D !important;
+  padding: 0 0.25em 0.05em !important;
 }
