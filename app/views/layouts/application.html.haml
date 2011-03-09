@@ -6,7 +6,7 @@
 
     %link{:href => "https://fonts.googleapis.com/css?family=Puritan:regular,italic,bold,bolditalic", :rel => "stylesheet", :type => "text/css"}
     %link{:href => "https://fonts.googleapis.com/css?family=Ubuntu:regular,italic,bold,bolditalic", :rel => "stylesheet", :type => "text/css"}
-    = stylesheet_link_tag :all
+    = stylesheet_link_tag "reset", "960", "syntax", "text", "application", :cache => true
     = csrf_meta_tag
   %body
     .container_16

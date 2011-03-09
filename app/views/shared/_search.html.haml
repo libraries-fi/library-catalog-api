@@ -2,5 +2,5 @@
   - [:title, :isbn, :author].each do |type|
     = radio_button_tag :type, type, (type == @search_type)
     = label_tag "type_#{type}", type
-  = text_field_tag :query, @search_query, :placeholder => 'Search by title...'
+  = search_field_tag :query, @search_query, :placeholder => "Search term"
   = submit_tag "Search"
