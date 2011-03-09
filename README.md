@@ -29,7 +29,10 @@
 ### Import the data
 
     $ rake load_marcxml_files FILE=replace_this_with_the_name_of_the_marcxml_file_you_want_to_import.xml
-    
+
+### Deploy the application
+
+    Use Apache web server and Phusion Passenger (or whatever you're comfortable with)
     
 
 ## Creating code examples
