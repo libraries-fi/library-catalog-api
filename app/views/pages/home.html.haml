@@ -150,7 +150,7 @@
   You should probably use a JavaScript library to handle JSONP. Here is an example using "jQuery":http://jquery.com/ -library.
 
 :plain
-  <div class="highlight"><pre><span class="nx">$</span><span class="p">.</span><span class="nx">getJSON</span><span class="p">(</span><span class="s1">&#39;http://localhost:3000/search/title.json?query=ja&amp;callback=?&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+  <div class="highlight"><pre><span class="nx">$</span><span class="p">.</span><span class="nx">getJSON</span><span class="p">(</span><span class="s1">&#39;http://#{HOST}/search/title.json?query=ja&amp;callback=?&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
     <span class="c1">// Define your own processing of the JSON...</span>
     <span class="nx">process</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
   <span class="p">});</span>
@@ -169,7 +169,7 @@
   <span class="k">class</span> <span class="nc">Helmet</span>
     <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">search_by_title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
       <span class="n">request</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="o">::</span><span class="no">Get</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;/search/title.json?query=</span><span class="si">\#{</span><span class="no">CGI</span><span class="o">.</span><span class="n">escape</span><span class="p">(</span><span class="n">title</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-      <span class="n">http</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;localhost&quot;</span><span class="p">,</span> <span class="mi">3000</span><span class="p">)</span>
+      <span class="n">http</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;#{HOST}&quot;</span><span class="p">,</span> <span class="mi">3000</span><span class="p">)</span>
       <span class="n">response</span> <span class="o">=</span> <span class="n">http</span><span class="o">.</span><span class="n">start</span> <span class="p">{</span> <span class="o">|</span><span class="n">http</span><span class="o">|</span> <span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">request</span><span class="p">)</span> <span class="p">}</span>
       
       <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">class</span><span class="o">.</span><span class="n">superclass</span> <span class="o">==</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTPSuccess</span>

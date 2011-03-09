@@ -1,23 +1,35 @@
 class SearchController < ApplicationController
+  def form_redirect
+    type = params.delete(:type)
+    query = params.delete(:query)
+    redirect_to ({:controller => :search, :action => type, :query => query})
+  end
+  
   def isbn
-    search("isbn")
+    @search_type = :isbn
+    search(@search_type)
   end
   
   def author
-    search("author")
+    @search_type = :author
+    search(@search_type)
   end
   
   def title
-    search("title")
+    @search_type = :title
+    search(@search_type)
   end
   
-  def search(string)
+  private
+  
+  def search(search_type)
     @search_query = params[:query]
-    if string == "isbn"
+    case search_type
+    when :isbn
       @records = Record.search_by_isbn(@search_query).paginate(:page => params[:page], :per_page => 5)
-    elsif string == "author"
+    when :author
       @records = Record.search_by_author(@search_query).paginate(:page => params[:page], :per_page => 5)
-    elsif string == "title"
+    when :title
       @records = Record.search_by_title(@search_query).paginate(:page => params[:page], :per_page => 5)
     end
 

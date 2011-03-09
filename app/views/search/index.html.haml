@@ -1,8 +1,14 @@
 = render "shared/search"
 - if @records.any?
-  %h3 Tulokset
+  %h3 Results
+  
+  %p
+    = pluralize(@records.total_entries, "record")
+    matched the search query:
+    %em= "'" + params[:query] + "'"
+  
   = render "shared/records"
-  %br
+
   %p
     Show results in 
     = link_to "JSON", params.merge(:format => :json)
@@ -11,5 +17,4 @@
     format.
 - else
   %p{:style => "padding-top: 20px"} 
-    So records matched the search query:
-    %em= "'" + params[:query] + "'"
+    No records found.

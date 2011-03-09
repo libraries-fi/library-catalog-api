@@ -1,6 +1,5 @@
-%p
+%ul.no_bullets
   - @records.each do |record|
-    = link_to record.name, record
-    %br
-%br
+    %li= link_to record.name, record
+
 = will_paginate @records

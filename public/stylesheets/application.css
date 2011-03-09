@@ -73,3 +73,17 @@ code {
   color: #52595D !important;
   padding: 0 0.25em 0.05em !important;
 }
+
+form.search {
+  margin-bottom: 2em;
+}
+
+ul.no_bullets li {
+  list-style: none;
+  margin-left: 0;
+}
+
+.instructions {
+  font-size: 18px;
+  margin-top: 20px;
+}

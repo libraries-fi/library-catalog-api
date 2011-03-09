@@ -1,3 +1,6 @@
-= form_tag title_search_path, :method => :get do 
-  = text_field_tag :query, nil, :placeholder => 'Search by title...'
+= form_tag search_form_redirect_path, :method => :get, :class => "search" do
+  - [:title, :isbn, :author].each do |type|
+    = radio_button_tag :type, type, (type == @search_type)
+    = label_tag "type_#{type}", type
+  = text_field_tag :query, @search_query, :placeholder => 'Search by title...'
   = submit_tag "Search"
