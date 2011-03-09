@@ -5,6 +5,7 @@ KirjastoData::Application.routes.draw do
   match "/search/title" => "search#title", :as => :title_search, :via => :get
   match "/search/form_redirect" => "search#form_redirect", :as => :search_form_redirect, :via => :get
   match "/search" => "pages#search", :as => :search_page, :via => :get
+  match "/feedback" => "pages#feedback", :as => :feedback, :via => :get
 
   root :to => "pages#home"
 end

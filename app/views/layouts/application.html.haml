@@ -1,0 +1,35 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=utf-8", :"http-equiv" => "content-type"}
+    %title Kirjasto data API
+
+    %link{:href => "https://fonts.googleapis.com/css?family=Puritan:regular,italic,bold,bolditalic", :rel => "stylesheet", :type => "text/css"}
+    %link{:href => "https://fonts.googleapis.com/css?family=Ubuntu:regular,italic,bold,bolditalic", :rel => "stylesheet", :type => "text/css"}
+    = stylesheet_link_tag :all
+    = csrf_meta_tag
+  %body
+    .container_16
+      #header.grid_13
+        %a{:href => "/"}
+          .logo
+        %h1 HelMet data API
+        %ul#navigation
+          %li
+            = link_to "Home", :root
+          %li
+            = link_to "Search", search_page_path
+          %li
+            = link_to "Feedback", feedback_path
+        %hr/
+
+      #content.grid_13
+        = yield
+  
+      #footer.grid_13
+        %hr
+          #copyright.left
+            © #{link_to "labs.kirjastot.fi", "http://labs.kirjastot.fi"}, labs (at) kirjastot.fi
+          #kisko.right
+            In co-operation with
+            = link_to "Kisko Labs", "http://kiskolabs.com"
