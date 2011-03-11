@@ -23,14 +23,18 @@ task :load_marcxml_files => :environment do
     if line.match(/<\/record>/)
       record = Record.new(:marcxml => record_data)
       record.generate_json
-      record.save!
-      record_data = ""
-      if record.helmet_id.blank? || record.title_main.blank? || record.author_main.blank?
-        print "\e[31m.\e[0m"
+      if record.valid?
+        record.save!
+        if record.helmet_id.blank? || record.title_main.blank? || record.author_main.blank?
+          print "\e[31m.\e[0m"
+        else
+          print "\e[32m.\e[0m"
+        end
+        counter += 1
       else
-        print "\e[32m.\e[0m"
+        print "\e[33m.\e[0m"
       end
-      counter += 1
+      record_data = ""
     end
   end
 
