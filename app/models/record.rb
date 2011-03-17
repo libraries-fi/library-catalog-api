@@ -30,9 +30,13 @@ class Record < ActiveRecord::Base
         :leader => parsed_xml.css("leader").text,
         :title_main => title_main,
         :helmet_id => helmet_id,
+        :library_link => "http://www.helmet.fi/record=#{helmet_id.match(/\(FI-HELMET\)(\w*)/)[1]}~S9*eng",
         :author_main => author_main,
         :author_group => parsed_xml.css("datafield[tag='110'], datafield[tag='700']").map do |data_field|
-          data_field.css("subfield[code='a']").map(&:text).join(", ")
+          {
+            :name => data_field.css("subfield[code='a']").map(&:text).join(", "), 
+            :relationship => data_field.css("subfield[code='e']").map(&:text).join(", ")
+          }
         end,
         :description => parsed_xml.css("datafield[tag='300']").map do |data_field|
           data_field.css("subfield[code='a']").text
