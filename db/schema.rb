@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110302084812) do
+ActiveRecord::Schema.define(:version => 20110318105810) do
 
   create_table "data_fields", :force => true do |t|
     t.string   "tag"
@@ -34,6 +34,8 @@ ActiveRecord::Schema.define(:version => 20110302084812) do
     t.text     "marcxml"
     t.text     "json"
   end
+
+  add_index "records", ["helmet_id"], :name => "index_records_on_helmet_id", :unique => true
 
   create_table "subfields", :force => true do |t|
     t.string   "value"
