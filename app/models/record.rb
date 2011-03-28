@@ -6,19 +6,16 @@ class Record < ActiveRecord::Base
 
   pg_search_scope :search_by_isbn, :against => :isbn, :using => {
     :tsearch => {
-      :prefix => true,
       :dictionary => "finnish"
     }
   }
   pg_search_scope :search_by_title, :against => :title_main, :using => {
     :tsearch => {
-      :prefix => true,
       :dictionary => "finnish"
     }
   }
   pg_search_scope :search_by_author, :against => :author_main, :using => {
     :tsearch => {
-      :prefix => true,
       :dictionary => "finnish"
     }
   }
