@@ -10,19 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110318105810) do
-
-  create_table "data_fields", :force => true do |t|
-    t.string   "tag"
-    t.string   "ind1"
-    t.string   "ind2"
-    t.integer  "record_id"
-    t.string   "code"
-    t.text     "value"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "field_type"
-  end
+ActiveRecord::Schema.define(:version => 20110328131208) do
 
   create_table "records", :force => true do |t|
     t.text     "author_main"
@@ -36,14 +24,6 @@ ActiveRecord::Schema.define(:version => 20110318105810) do
   end
 
   add_index "records", ["helmet_id"], :name => "index_records_on_helmet_id", :unique => true
-
-  create_table "subfields", :force => true do |t|
-    t.string   "value"
-    t.string   "code"
-    t.integer  "data_field_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "titles", :force => true do |t|
     t.string   "permalink"
