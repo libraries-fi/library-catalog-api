@@ -3,9 +3,25 @@
 class Record < ActiveRecord::Base
   has_many :data_fields, :dependent => :destroy
   include PgSearch
-  pg_search_scope :search_by_isbn, :against => :isbn
-  pg_search_scope :search_by_title, :against => :title_main
-  pg_search_scope :search_by_author, :against => :author_main
+
+  pg_search_scope :search_by_isbn, :against => :isbn, :using => {
+    :tsearch => {
+      :prefix => true,
+      :dictionary => "finnish"
+    }
+  }
+  pg_search_scope :search_by_title, :against => :title_main, :using => {
+    :tsearch => {
+      :prefix => true,
+      :dictionary => "finnish"
+    }
+  }
+  pg_search_scope :search_by_author, :against => :author_main, :using => {
+    :tsearch => {
+      :prefix => true,
+      :dictionary => "finnish"
+    }
+  }
   
   validates_uniqueness_of :helmet_id
 
