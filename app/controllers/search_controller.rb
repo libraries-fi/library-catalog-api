@@ -1,4 +1,6 @@
 class SearchController < ApplicationController
+  PER_PAGE = 30
+
   def form_redirect
     type = params.delete(:type)
     query = params.delete(:query)
@@ -26,11 +28,11 @@ class SearchController < ApplicationController
     @search_query = params[:query]
     case search_type
     when :isbn
-      @records = Record.search_by_isbn(@search_query).paginate(:page => params[:page], :per_page => 5)
+      @records = Record.search_by_isbn(@search_query).paginate(:page => params[:page], :per_page => PER_PAGE)
     when :author
-      @records = Record.search_by_author(@search_query).paginate(:page => params[:page], :per_page => 5)
+      @records = Record.search_by_author(@search_query).paginate(:page => params[:page], :per_page => PER_PAGE)
     when :title
-      @records = Record.search_by_title(@search_query).paginate(:page => params[:page], :per_page => 5)
+      @records = Record.search_by_title(@search_query).paginate(:page => params[:page], :per_page => PER_PAGE)
     end
 
     respond_to do |format|
