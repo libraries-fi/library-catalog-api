@@ -23,7 +23,11 @@ class Record < ActiveRecord::Base
   validates_uniqueness_of :helmet_id
 
   def name
-    title_main
+    if title_main.match(/ \/$/)
+      title_main[0..-3]
+    else
+      title_main
+    end
   end
 
   def other_name
