@@ -2,4 +2,4 @@
   - @records.each do |record|
     %li= link_to record.name, record
 
-= will_paginate @records
+= will_paginate @records, :class => "pagination clearfix"

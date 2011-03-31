@@ -86,3 +86,43 @@ ul.no_bullets li {
   font-size: 18px;
   margin-top: 20px;
 }
+
+/* Pagination */
+
+.pagination {
+  margin-bottom: 1em;
+}
+
+.pagination a {
+  border:solid 1px #DDD;
+  margin-right:2px;
+}
+
+.pagination span.disabled {
+  color:#666;
+  font-weight:bold;
+  padding:3px 4px;
+}
+
+.pagination a.next_page,
+.pagination a.prev_page {
+  font-weight:bold;
+}
+
+.pagination .current {
+  color:#000000;
+  font-weight:bold;
+  padding:4px 6px;
+}
+
+.pagination a:link,
+.pagination a:visited {
+  color:#3465A4;
+  padding:3px 6px;
+  text-decoration:none;
+}
+
+.pagination a:hover {
+  border:solid 1px #666666;
+}
+
