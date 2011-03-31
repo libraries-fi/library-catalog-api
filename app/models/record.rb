@@ -30,11 +30,6 @@ class Record < ActiveRecord::Base
     end
   end
 
-  def other_name
-    # FIXME
-    # data_fields.where(:tag => "245").first.subfields.where(:code => "b").first.try(:value)
-  end
-  
   def marcxml=(new_marcxml)
     @parsed_xml = nil
     write_attribute(:marcxml, new_marcxml)
