@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110328132046) do
+ActiveRecord::Schema.define(:version => 20110404114508) do
 
   create_table "records", :force => true do |t|
     t.text     "author_main"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(:version => 20110328132046) do
   end
 
   add_index "records", ["helmet_id"], :name => "index_records_on_helmet_id", :unique => true
+  add_index "records", ["isbn"], :name => "index_records_on_isbn"
 
   create_table "titles", :force => true do |t|
     t.string   "permalink"

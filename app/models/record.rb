@@ -4,11 +4,10 @@ class Record < ActiveRecord::Base
   has_many :data_fields, :dependent => :destroy
   include PgSearch
 
-  pg_search_scope :search_by_isbn, :against => :isbn, :using => {
-    :tsearch => {
-      :dictionary => "finnish"
-    }
-  }
+  def self.search_by_isbn(isbn)
+    where(:isbn => isbn.tr("- ", ""))
+  end
+
   pg_search_scope :search_by_title, :against => :title_main, :using => {
     :tsearch => {
       :dictionary => "finnish"
@@ -77,11 +76,18 @@ class Record < ActiveRecord::Base
       unless title_tag.nil?
         self.title_main = title_tag.css("subfield[code='a']").text
       end
-      isbn_field = parsed_xml.css("datafield[tag='020']").first
-      unless isbn_field.nil?
-        self.isbn = isbn_field.css("subfield").children.first.text
-      end
+      denormalize_isbn
       self.helmet_id = parsed_xml.css("datafield[tag='035']").first.css("subfield[code='a']").text
+    end
+  end
+
+  def denormalize_isbn
+    isbn_field = parsed_xml.css("datafield[tag='020']").first
+    unless isbn_field.nil?
+      match = isbn_field.css("subfield").children.first.text.match(/^[\d\-X]+/).try(:[], 0)
+      if match
+        self.isbn = match.tr("-", "")
+      end
     end
   end
 end
