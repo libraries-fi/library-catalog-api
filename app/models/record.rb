@@ -35,10 +35,58 @@ class Record < ActiveRecord::Base
     denormalize_fields
   end
 
+  def record_type
+    leader = parsed_xml.css("leader")
+    record_type = leader.text[5]
+    bibliographic_level = leader.text[6]
+
+    case record_type
+    when "r"
+      "Object"
+    when "k"
+      "Photo"
+    when "g"
+      "Projected medium"
+    when "i"
+      "Sound recording"
+    when "j"
+      "Music"
+    when "o"
+      "Kit"
+    when "p"
+      "Kit"
+    when "e"
+      "Map"
+    when "f"
+      "Map"
+    when "m"
+      "Computer file"
+    when "c"
+      "Sheet music"
+    when "d"
+      "Sheet music"
+    when "t"
+      "Manuscript"
+    when "a"
+      if bibliographic_level == "s"
+        "Periodical"
+      else
+        "Book"
+      end
+    else
+      if bibliographic_level == "s"
+        "Periodical"
+      else
+        "Book"
+      end
+    end
+  end
+
   def generate_json
     unless marcxml.blank?
       self.json = {
-        :leader => parsed_xml.css("leader").text,
+        :record_type => record_type,
+        :isbn => isbn,
         :title_main => title_main,
         :helmet_id => helmet_id,
         :library_link => "http://www.helmet.fi/record=#{helmet_id.match(/\(FI-HELMET\)(\w*)/)[1]}~S9*eng",
@@ -51,7 +99,8 @@ class Record < ActiveRecord::Base
         end,
         :description => parsed_xml.css("datafield[tag='300']").map do |data_field|
           data_field.css("subfield[code='a']").text
-        end
+        end,
+        :leader => parsed_xml.css("leader").text
       }.to_json
     end
   end
