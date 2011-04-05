@@ -1,7 +1,6 @@
 # encoding: utf-8
 #
 class Record < ActiveRecord::Base
-  has_many :data_fields, :dependent => :destroy
   include PgSearch
 
   def self.search_by_isbn(isbn)
