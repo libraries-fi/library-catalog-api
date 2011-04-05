@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
     end
 
     if callback
-      "#{callback}({#{json.to_json}})"
+      "#{callback}({#{json}})"
     else
       "{" + json + "}"
     end
