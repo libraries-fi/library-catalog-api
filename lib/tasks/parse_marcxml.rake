@@ -53,6 +53,16 @@ task :migrate_isbn => :environment do
   end
 end
 
+task :migrate_helmet_id => :environment do
+  Record.find_in_batches(:batch_size => 1000) do |record_group|
+    print "."
+    record_group.each do |record|
+      record.send(:denormalize_helmet_id)
+      record.save!
+    end
+  end
+end
+
 task :migrate_json => :environment do
   Record.find_in_batches(:batch_size => 1000) do |record_group|
     print "."
