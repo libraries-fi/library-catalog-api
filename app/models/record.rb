@@ -125,8 +125,12 @@ class Record < ActiveRecord::Base
         self.title_main = title_tag.css("subfield[code='a']").text
       end
       denormalize_isbn
-      self.helmet_id = parsed_xml.css("datafield[tag='035']").first.css("subfield[code='a']").text
+      denormalize_helmet_id
     end
+  end
+
+  def denormalize_helmet_id
+    self.helmet_id = parsed_xml.css("datafield[tag='035']").first.css("subfield[code='a']").text
   end
 
   def denormalize_isbn
