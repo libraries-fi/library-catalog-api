@@ -67,7 +67,6 @@ task :migrate_json => :environment do
   Record.find_in_batches(:batch_size => 1000) do |record_group|
     print "."
     record_group.each do |record|
-      print "#{record.id} "
       record.generate_json
       record.save!
     end
