@@ -9,7 +9,7 @@ class SearchController < ApplicationController
   
   def isbn
     @search_type = :isbn
-    @record = Record.search_by_isbn(params[:query])
+    @record = Record.search_by_isbn(params[:query]).first
     respond_with_record(@record)
   end
   
