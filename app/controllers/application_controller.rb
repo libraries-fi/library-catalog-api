@@ -18,9 +18,9 @@ class ApplicationController < ActionController::Base
 
   def record_as_json(record, callback = nil)
     if callback
-      "#{callback}(#{record.json})"
+      "#{callback}(#{record.try(:json)})"
     else
-      record.json
+      record.try(:json)
     end
   end
 end
