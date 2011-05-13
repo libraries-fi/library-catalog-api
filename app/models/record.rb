@@ -36,47 +36,47 @@ class Record < ActiveRecord::Base
 
   def record_type
     leader = parsed_xml.css("leader")
-    record_type = leader.text[5]
-    bibliographic_level = leader.text[6]
+    record_type = leader.text[6]
+    bibliographic_level = leader.text[7]
 
     case record_type
     when "r"
-      "Object"
+      "object"
     when "k"
-      "Photo"
+      "photo"
     when "g"
-      "Projected medium"
+      "film"
     when "i"
-      "Sound recording"
+      "sound recording"
     when "j"
-      "Music"
+      "music recording"
     when "o"
-      "Kit"
+      "kit"
     when "p"
-      "Kit"
+      "kit"
     when "e"
-      "Map"
+      "map"
     when "f"
-      "Map"
+      "map"
     when "m"
-      "Computer file"
+      "computer file"
     when "c"
-      "Sheet music"
+      "sheet music"
     when "d"
-      "Sheet music"
+      "sheet music"
     when "t"
-      "Manuscript"
+      "manuscript"
     when "a"
       if bibliographic_level == "s"
-        "Periodical"
+        "periodical"
       else
-        "Book"
+        "book"
       end
     else
       if bibliographic_level == "s"
-        "Periodical"
+        "periodical"
       else
-        "Book"
+        "book"
       end
     end
   end
@@ -84,22 +84,27 @@ class Record < ActiveRecord::Base
   def generate_json
     unless marcxml.blank?
       self.json = {
-        :record_type => record_type,
+        :type => record_type,
         :isbn => isbn,
-        :title_main => title_main,
-        :helmet_id => helmet_id,
+        :title => title_main,
+        :library_id => helmet_id,
         :library_link => "http://www.helmet.fi/record=#{helmet_id.match(/\(FI-HELMET\)(\w*)/)[1]}~S9*eng",
-        :author_main => author_main,
-        :author_group => parsed_xml.css("datafield[tag='110'], datafield[tag='700']").map do |data_field|
+        :author => author_main,
+        :author_details => parsed_xml.css("datafield[tag='700'], datafield[tag='710']").map do |data_field|
           {
             :name => data_field.css("subfield[code='a']").map(&:text).join(", "), 
-            :relationship => data_field.css("subfield[code='e']").map(&:text).join(", ")
+            :role => data_field.css("subfield[code='e']").map(&:text).join(", ")
           }
         end,
-        :description => parsed_xml.css("datafield[tag='300']").map do |data_field|
+        :extent => parsed_xml.css("datafield[tag='300']").map do |data_field|
           data_field.css("subfield[code='a']").text
         end,
-        :leader => parsed_xml.css("leader").text
+        :description => parsed_xml.css("datafield[tag='500']").map do |data_field|
+          data_field.css("subfield[code='a']").text
+        end,
+        :contents => parsed_xml.css("datafield[tag='505']").map do |data_field|
+          data_field.css("subfield[code='a']").text
+        end,
       }.to_json
     end
   end
@@ -116,17 +121,27 @@ class Record < ActiveRecord::Base
     
   def denormalize_fields
     unless marcxml.blank?
-      author_fields = parsed_xml.css("datafield[tag='100'], datafield[tag='700']")
+      author_fields = parsed_xml.css("datafield[tag='100'], datafield[tag='110']")
       unless author_fields.empty?
         self.author_main = author_fields.first.css("subfield[code='a']").text
       end
       title_tag = parsed_xml.css("datafield[tag='245']").first
       unless title_tag.nil?
         self.title_main = title_tag.css("subfield[code='a']").text
+        subtitle_tag = title_tag.css("subfield[code='b']").first
+        if subtitle_tag.nil?
+          self.title_main = strip_punctuation(self.title_main)
+        else
+          self.title_main << ' ' << strip_punctuation(subtitle_tag.text)
+        end
       end
       denormalize_isbn
       denormalize_helmet_id
     end
+  end
+
+  def strip_punctuation(title)
+    return title.sub(/[ ]+[\/=:]$/, '')
   end
 
   def denormalize_helmet_id
