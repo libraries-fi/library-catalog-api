@@ -6,5 +6,9 @@
   <%- if @records.respond_to?(:previous_page) && !@records.previous_page.nil? -%>
     <link rel="previous" href="<%= url_for(params.merge(:page => @records.previous_page, :only_path => false)) %>"/>
   <%- end -%>
-  <%= raw @records.map(&:marcxml).join("\n") %>
+  <%- if @records.nil? -%>
+  <%= raw @record.marcxml %> 
+  <%- else -%>
+  <%= raw @records.map(&:marcxml).join("\n") %> 
+  <%- end -%>
 </collection>
