@@ -72,3 +72,13 @@ task :migrate_json => :environment do
     end
   end
 end
+
+task :migrate_fields => :environment do
+  Record.find_in_batches(:batch_size => 1000) do |record_group|
+    print "."
+    record_group.each do |record|
+      record.send(:denormalize_fields)
+      record.save!
+    end
+  end
+end
