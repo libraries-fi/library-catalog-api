@@ -26,10 +26,4 @@ ActiveRecord::Schema.define(:version => 20110404114508) do
   add_index "records", ["helmet_id"], :name => "index_records_on_helmet_id", :unique => true
   add_index "records", ["isbn"], :name => "index_records_on_isbn"
 
-  create_table "titles", :force => true do |t|
-    t.string   "permalink"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
 end
