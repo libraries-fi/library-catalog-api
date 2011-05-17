@@ -4,7 +4,7 @@ class AddTableAuthors < ActiveRecord::Migration
     create_table :additional_authors do |t|
       t.text    :name
     end
-    execute "CREATE INDEX additional_authors_name_tindex ON additional_authors USING gin(to_tsvector('finnish', coalesce(additional_authors.name, '')));"
+    execute "CREATE INDEX additional_authors_name_tindex ON additional_authors USING gin(to_tsvector('simple', coalesce(additional_authors.name, '')));"
     
     create_table :additional_authors_records, :id => false do |t|
       t.integer :record_id, :null => false
