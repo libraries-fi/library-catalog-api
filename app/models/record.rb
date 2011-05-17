@@ -1,22 +1,25 @@
 # encoding: utf-8
 #
+
+class AdditionalAuthor < ActiveRecord::Base
+  has_and_belongs_to_many :records
+end
+
 class Record < ActiveRecord::Base
+  has_and_belongs_to_many :additional_authors
   include PgSearch
 
   def self.search_by_isbn(isbn)
     where(:isbn => isbn.tr("- ", ""))
   end
 
-  pg_search_scope :search_by_title, :against => :title_main, :using => {
-    :tsearch => {
-      :dictionary => "finnish"
-    }
-  }
-  pg_search_scope :search_by_author, :against => :author_main, :using => {
-    :tsearch => {
-      :dictionary => "finnish"
-    }
-  }
+  pg_search_scope :search_by_title, :against => :title_main, :using => :tsearch
+
+  pg_search_scope :search_by_author, 
+    :against => {:author_main => 'A'}, 
+    :using => :tsearch ,
+    :associated_against => {:additional_authors => {:name => 'B'}}
+
   
   validates_uniqueness_of :helmet_id
 
@@ -88,12 +91,14 @@ class Record < ActiveRecord::Base
         :isbn => isbn,
         :title => title_main,
         :library_id => helmet_id,
-        :library_link => "http://www.helmet.fi/record=#{helmet_id.match(/\(FI-HELMET\)(\w*)/)[1]}~S9*eng",
+        :library_url => "http://www.helmet.fi/record=#{helmet_id.match(/\(FI-HELMET\)(\w*)/)[1]}~S9*eng",
         :author => author_main,
         :author_details => parsed_xml.css("datafield[tag='700'], datafield[tag='710']").map do |data_field|
+          role = data_field.css("subfield[code='e']").map(&:text).join(", ").strip
+          role = nil if role.empty?
           {
-            :name => data_field.css("subfield[code='a']").map(&:text).join(", "), 
-            :role => data_field.css("subfield[code='e']").map(&:text).join(", ")
+            :name => data_field.css("subfield[code='a']").map(&:text).join(", "),
+            :role => role
           }
         end,
         :extent => parsed_xml.css("datafield[tag='300']").map do |data_field|
@@ -111,6 +116,18 @@ class Record < ActiveRecord::Base
 
   def to_param
     helmet_id
+  end
+
+  def add_authors
+    parsed_xml.css("datafield[tag='700'], datafield[tag='710']").map do |datafield|
+      name = datafield.css("subfield[code='a']").text.strip
+      aa = AdditionalAuthor.where("name = ?", name).first
+      if aa.nil?
+        self.additional_authors.create({:name => name})
+      elsif not self.additional_authors.exists?(aa)
+        self.additional_authors << aa
+      end
+    end
   end
 
   private
@@ -139,6 +156,7 @@ class Record < ActiveRecord::Base
       denormalize_helmet_id
     end
   end
+
 
   def strip_punctuation(title)
     return title.sub(/[ ]+[\/=:]$/, '')
