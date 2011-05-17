@@ -18,7 +18,7 @@ class MarcxmlParser < Nokogiri::XML::SAX::Document
         :field_type => name,
         :tag => find_value(attributes, "tag"),
         :ind1 => find_value(attributes, "ind1"),
-        :ind2 => find_value(attributes, "ind2"),
+        :ind2 => find_value(attributes, "ind2")
       )
       @current_field.save!
     elsif name == "subfield"
