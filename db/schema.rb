@@ -10,7 +10,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110404114508) do
+ActiveRecord::Schema.define(:version => 20110517115648) do
+
+  create_table "additional_authors", :force => true do |t|
+    t.text "name"
+  end
+
+  create_table "additional_authors_records", :id => false, :force => true do |t|
+    t.integer "record_id",            :null => false
+    t.integer "additional_author_id", :null => false
+  end
+
+  add_index "additional_authors_records", ["record_id", "additional_author_id"], :name => "records_authors", :unique => true
 
   create_table "records", :force => true do |t|
     t.text     "author_main"

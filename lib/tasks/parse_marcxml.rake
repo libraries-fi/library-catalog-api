@@ -25,8 +25,11 @@ task :load_marcxml_files => :environment do
       record.generate_json
       if record.valid?
         record.save!
-        if record.helmet_id.blank? || record.title_main.blank? || record.author_main.blank?
+        record.add_authors
+        if record.helmet_id.blank? || record.title_main.blank?
           print "\e[31m.\e[0m"
+        elsif record.author_main.blank?
+          print "\e[37m.\e[0m"
         else
           print "\e[32m.\e[0m"
         end
@@ -68,6 +71,16 @@ task :migrate_json => :environment do
     print "."
     record_group.each do |record|
       record.generate_json
+      record.save!
+    end
+  end
+end
+
+task :migrate_fields => :environment do
+  Record.find_in_batches(:batch_size => 1000) do |record_group|
+    print "."
+    record_group.each do |record|
+      record.send(:denormalize_fields)
       record.save!
     end
   end
