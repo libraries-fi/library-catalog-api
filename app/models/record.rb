@@ -1,12 +1,8 @@
 # encoding: utf-8
 #
 
-class AdditionalAuthor < ActiveRecord::Base
-  has_and_belongs_to_many :records
-end
 
 class Record < ActiveRecord::Base
-  has_and_belongs_to_many :additional_authors
   include PgSearch
 
   def self.search_by_isbn(isbn)
@@ -16,10 +12,8 @@ class Record < ActiveRecord::Base
   pg_search_scope :search_by_title, :against => :title_main, :using => :tsearch
 
   pg_search_scope :search_by_author, 
-    :against => {:author_main => 'A'}, 
-    :using => :tsearch ,
-    :associated_against => {:additional_authors => {:name => 'B'}}
-
+    :against => {:author_main => 'A', :additional_authors => 'B'}, 
+    :using => :tsearch
   
   validates_uniqueness_of :helmet_id
 
@@ -118,17 +112,6 @@ class Record < ActiveRecord::Base
     helmet_id
   end
 
-  def add_authors
-    parsed_xml.css("datafield[tag='700'], datafield[tag='710']").map do |datafield|
-      name = datafield.css("subfield[code='a']").text.strip
-      aa = AdditionalAuthor.where("name = ?", name).first
-      if aa.nil?
-        self.additional_authors.create({:name => name})
-      elsif not self.additional_authors.exists?(aa)
-        self.additional_authors << aa
-      end
-    end
-  end
 
   private
 
@@ -138,10 +121,18 @@ class Record < ActiveRecord::Base
     
   def denormalize_fields
     unless marcxml.blank?
+
       author_fields = parsed_xml.css("datafield[tag='100'], datafield[tag='110']")
       unless author_fields.empty?
         self.author_main = author_fields.first.css("subfield[code='a']").text
       end
+
+      authors = ''
+      parsed_xml.css("datafield[tag='700'], datafield[tag='710']").map do |data_field|
+        authors << ' ' << data_field.css("subfield[code='a']").text.strip
+      end
+      self.additional_authors = authors
+
       title_tag = parsed_xml.css("datafield[tag='245']").first
       unless title_tag.nil?
         self.title_main = title_tag.css("subfield[code='a']").text

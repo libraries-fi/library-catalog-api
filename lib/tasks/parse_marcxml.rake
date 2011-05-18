@@ -25,7 +25,6 @@ task :load_marcxml_files => :environment do
       record.generate_json
       if record.valid?
         record.save!
-        record.add_authors
         if record.helmet_id.blank? || record.title_main.blank?
           print "\e[31m.\e[0m"
         elsif record.author_main.blank?
