@@ -10,10 +10,8 @@ class Record < ActiveRecord::Base
   end
 
   pg_search_scope :search_by_title, :against => :title_main, :using => :tsearch
-
-  pg_search_scope :search_by_author, 
-    :against => {:author_main => 'A', :additional_authors => 'B'}, 
-    :using => :tsearch
+  pg_search_scope :search_by_author, :against => :author_main, :using => :tsearch
+  pg_search_scope :search_by_additional_authors, :against => :additional_authors, :using => :tsearch
   
   validates_uniqueness_of :helmet_id
 

@@ -15,7 +15,9 @@ class SearchController < ApplicationController
   
   def author
     @search_type = :author
-    @records = Record.search_by_author(params[:query]).paginate(:page => params[:page], :per_page => PER_PAGE)
+    main = Record.search_by_author(params[:query])
+    more = Record.search_by_additional_authors(params[:query])
+    @records = (main + more).paginate(:page => params[:page], :per_page => PER_PAGE)
     respond_with_records(@records)
   end
   
