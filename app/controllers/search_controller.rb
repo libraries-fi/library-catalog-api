@@ -34,7 +34,7 @@ class SearchController < ApplicationController
       format.html { render "index" }
       format.json {
         if params[:callback]
-          render :js => records_as_json(records, params[:callback])
+          render :js => records_as_json(records, params[:callback]), :content_type => 'application/javascript'
         else
           render :json => records_as_json(records)
         end
@@ -48,7 +48,7 @@ class SearchController < ApplicationController
       format.html { render "index" }
       format.json {
         if params[:callback]
-          render :js => record_as_json(record, params[:callback])
+          render :js => record_as_json(record, params[:callback]), :content_type => 'application/javascript'
         else
           render :json => record_as_json(record)
         end
