@@ -8,7 +8,7 @@ class RecordsController < ApplicationController
       format.html # index.html.erb
       format.json { 
         if params[:callback]
-          render :js => records_as_json(@records, params[:callback])
+          render :js => records_as_json(@records, params[:callback]), :content_type => 'application/javascript'
         else
           render :json => records_as_json(@records)
         end
@@ -24,7 +24,7 @@ class RecordsController < ApplicationController
       format.html # show.html.erb
       format.json {
         if params[:callback]
-          render :js => record_as_json(@record, params[:callback])
+          render :js => record_as_json(@record, params[:callback]), :content_type => 'application/javascript'
         else
           render :json => record_as_json(@record)
         end
