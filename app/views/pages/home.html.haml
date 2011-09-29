@@ -1,7 +1,7 @@
 :textile
   h2. What
 
-  This API exposes "HelMet Library data":http://data.kirjastot.fi and provides search results in JSON and MarcXML format.
+  This API exposes "HelMet Library data":data.html and provides search results in JSON and MarcXML format.
 
   Currently the API is read-only.
 
@@ -45,25 +45,23 @@
 
 :plain
   <div class="highlight"><pre><span class="p">{</span>
-    <span class="s2">&quot;leader&quot;</span><span class="o">:</span><span class="s2">&quot;01225ngm  2200397   4500&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;title_main&quot;</span><span class="o">:</span><span class="s2">&quot;007 ja kuoleman katse /&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;helmet_id&quot;</span><span class="o">:</span><span class="s2">&quot;kr30844916&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;author_main&quot;</span><span class="o">:</span><span class="s2">&quot;Glen, John&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;author_group&quot;</span><span class="o">:</span>
-      <span class="p">[</span>
-        <span class="s2">&quot;Glen, John&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;Mailbaum, Richard&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;Wilson, Michael G.&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;Moore, Roger&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;Roberts, Tanya&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;Jones, Grace&quot;</span>
-      <span class="p">],</span>
-    <span class="s2">&quot;description&quot;</span><span class="o">:</span>
-      <span class="p">[</span>
-        <span class="s2">&quot;1 videokas. (2 h 5 min) :&quot;</span>
-      <span class="p">]</span>
-  <span class="p">}</span>
+   <span class="s2">&quot;author&quot;</span><span class="o">:</span> <span class="s2">&quot;Oksanen, Sofi&quot;</span><span class="p">,</span> 
+   <span class="s2">&quot;author_details&quot;</span><span class="o">:</span> <span class="p">[],</span> 
+   <span class="s2">&quot;contents&quot;</span><span class="o">:</span> <span class="p">[],</span> 
+   <span class="s2">&quot;description&quot;</span><span class="o">:</span> <span class="p">[</span>
+   <span class="s2">&quot;Perustuu tekij\u00e4n samannimiseen n\u00e4ytelm\u00e4\u00e4n&quot;</span>
+   <span class="p">],</span> 
+   <span class="s2">&quot;extent&quot;</span><span class="o">:</span> <span class="p">[</span>
+   <span class="s2">&quot;380 s. ;&quot;</span>
+   <span class="p">],</span> 
+   <span class="s2">&quot;isbn&quot;</span><span class="o">:</span> <span class="s2">&quot;9789510339732&quot;</span><span class="p">,</span> 
+   <span class="s2">&quot;library_id&quot;</span><span class="o">:</span> <span class="s2">&quot;(FI-HELMET)b1854574&quot;</span><span class="p">,</span> 
+   <span class="s2">&quot;library_url&quot;</span><span class="o">:</span> <span class="s2">&quot;http://www.helmet.fi/record=b1854574~S9*eng&quot;</span><span class="p">,</span> 
+   <span class="s2">&quot;title&quot;</span><span class="o">:</span> <span class="s2">&quot;Puhdistus : romaani&quot;</span><span class="p">,</span> 
+   <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;book&quot;</span>
+   <span class="p">}</span>
   </pre></div>
+  
 
   
 :textile
@@ -169,7 +167,7 @@
   <span class="k">class</span> <span class="nc">Helmet</span>
     <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">search_by_title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
       <span class="n">request</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="o">::</span><span class="no">Get</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;/search/title.json?query=</span><span class="si">\#{</span><span class="no">CGI</span><span class="o">.</span><span class="n">escape</span><span class="p">(</span><span class="n">title</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-      <span class="n">http</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;#{HOST}&quot;</span><span class="p">,</span> <span class="mi">3000</span><span class="p">)</span>
+      <span class="n">http</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;#{HOST}&quot;</span><span class="p">)</span>
       <span class="n">response</span> <span class="o">=</span> <span class="n">http</span><span class="o">.</span><span class="n">start</span> <span class="p">{</span> <span class="o">|</span><span class="n">http</span><span class="o">|</span> <span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">request</span><span class="p">)</span> <span class="p">}</span>
       
       <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">class</span><span class="o">.</span><span class="n">superclass</span> <span class="o">==</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTPSuccess</span>

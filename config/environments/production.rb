@@ -48,4 +48,4 @@ KirjastoData::Application.configure do
   config.active_support.deprecation = :notify
 end
 
-HOST = "kirjasto-api.heroku.com"
+HOST = "data.kirjastot.fi"
