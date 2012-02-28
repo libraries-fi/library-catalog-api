@@ -26,6 +26,17 @@ class SearchController < ApplicationController
     @records = Record.search_by_title(params[:query]).paginate(:page => params[:page], :per_page => PER_PAGE)
     respond_with_records(@records)
   end
+
+  def item
+    @search_type = :item
+    @items = Item.where(:barcode => params[:query])
+    @records = @items.collect do |item|
+      record = item.record
+      record.item_barcode = item.barcode
+      record
+    end
+    respond_with_records(@records)
+  end
   
   private
   
@@ -34,9 +45,18 @@ class SearchController < ApplicationController
       format.html { render "index" }
       format.json {
         if params[:callback]
-          render :js => records_as_json(records, params[:callback]), :content_type => 'application/javascript'
+          if @search_type == :item
+            json = records_as_json_with_itemids(records, params[:callback])
+          else
+            json = records_as_json(records, params[:callback])
+          end
+          render :js => json, :content_type => 'application/javascript'
         else
-          render :json => records_as_json(records)
+          if @search_type == :item
+            render :json => records_as_json_with_itemids(records)
+          else
+            render :json => records_as_json(records)
+          end
         end
       }
       format.marcxml { render "records/index" }

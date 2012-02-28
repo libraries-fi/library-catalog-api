@@ -88,7 +88,7 @@ SET default_with_oids = false;
 
 CREATE TABLE items (
     id integer NOT NULL,
-    barcode integer NOT NULL,
+    barcode integer,
     record_id integer,
     created_at timestamp without time zone,
     updated_at timestamp without time zone
@@ -290,3 +290,7 @@ INSERT INTO schema_migrations (version) VALUES ('20110518132823');
 INSERT INTO schema_migrations (version) VALUES ('20110518133855');
 
 INSERT INTO schema_migrations (version) VALUES ('20120112152201');
+
+INSERT INTO schema_migrations (version) VALUES ('20120113105720');
+
+INSERT INTO schema_migrations (version) VALUES ('20120113105943');

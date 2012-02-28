@@ -1,7 +1,7 @@
 class CreateItems < ActiveRecord::Migration
   def self.up
     create_table :items do |t|
-      t.integer :barcode
+      t.column :barcode, :bigint
       t.references :record
 
       t.timestamps

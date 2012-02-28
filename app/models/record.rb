@@ -14,6 +14,9 @@ class Record < ActiveRecord::Base
   pg_search_scope :search_by_additional_authors, :against => :additional_authors, :using => :tsearch
 
   validates_uniqueness_of :helmet_id
+  has_many :items
+
+  attr_accessor :item_barcode
 
   def name
     if title_main.match(/ \/$/)
@@ -76,6 +79,10 @@ class Record < ActiveRecord::Base
     end
   end
 
+  # Generates the json version of the record.
+  #--
+  # This is currently called at record batch import time.
+  #
   def generate_json
     unless marcxml.blank?
       self.json = {
