@@ -12,7 +12,7 @@ class Record < ActiveRecord::Base
   pg_search_scope :search_by_title, :against => :title_main, :using => :tsearch
   pg_search_scope :search_by_author, :against => :author_main, :using => :tsearch
   pg_search_scope :search_by_additional_authors, :against => :additional_authors, :using => :tsearch
-  
+
   validates_uniqueness_of :helmet_id
 
   def name
