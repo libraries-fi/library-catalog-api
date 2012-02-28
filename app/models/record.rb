@@ -90,8 +90,10 @@ class Record < ActiveRecord::Base
         :isbn => isbn,
         :title => title_main,
         :library_id => helmet_id,
-        :library_url => "http://www.helmet.fi/record=#{helmet_id.match(/\(FI-HELMET\)(\w*)/)[1]}~S9*eng",
+        :library_url => "http://haku.helmet.fi/iii/encore/record/C__R#{helmet_id.match(/\(FI-HELMET\)(\w*)/)[1]}__Orightresult?lang=fin",
         :author => author_main,
+        :publisher => parsed_xml.css("datafield[tag='260']").css("subfield[code='b']").text.strip.chomp(','),
+        :year => parsed_xml.css("datafield[tag='260']").css("subfield[code='c']").text,
         :author_details => parsed_xml.css("datafield[tag='700'], datafield[tag='710']").map do |data_field|
           role = data_field.css("subfield[code='e']").map(&:text).join(", ").strip
           role = nil if role.empty?
