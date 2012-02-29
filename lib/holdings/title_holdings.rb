@@ -10,10 +10,26 @@ class TitleHoldings
 
   def holdings(record_id)
     url = self.construct_url(record_id)
+    in_there = false
+    partial_doc = ""
+    # todo: preformance?
+    foo = open(url) do |file|
+      while line = file.gets
+        if line.match(/<div  class="additionalCopies">/)
+          in_there = true
+        elsif in_there and line.match(/<\/div>/)
+          in_there = false
+          partial_doc += line
+        end
+        if in_there
+          partial_doc += line
+        end
+      end
+    end
     begin
-      result = Nokogiri::HTML(open(url))
+      result = Nokogiri::HTML(partial_doc)
     rescue Exception => e
-      return [{:error => "There was an error retrieving the holdings information."}]
+      return [{:error => "There was an error retrieving the holdings information. #{e}"}]
     end
     return parse_results(result)
   end
