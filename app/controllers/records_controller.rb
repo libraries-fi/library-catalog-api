@@ -32,8 +32,5 @@ class RecordsController < ApplicationController
       format.marcxml # show.xml.erb
     end
   end
-
-  def resolve_barcode
-  end
   
 end

@@ -39,6 +39,15 @@ class ApplicationController < ActionController::Base
   end
 
   def record_as_json(record, callback = nil)
-    wrap_json(record.try(:json))
+    rec = ActiveSupport::JSON.decode(record.try(:json))
+    # todo: configure the holdings class elsewhere
+    holdings_fetcher = HelmetMobiHoldings.new
+    helmet_id = record.helmet_id.gsub(/^\([^)]+\)/, '')
+    rec['holdings'] = holdings_fetcher.holdings(helmet_id)
+    if callback
+      "#{callback}(#{rec.to_json})"
+    else
+      rec.to_json
+    end
   end
 end
