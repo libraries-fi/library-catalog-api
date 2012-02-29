@@ -6,7 +6,7 @@ require 'date'
 class HelmetMobiHoldings < TitleHoldings
 
   def initialize()
-    super("http://m.helmet.fi/record=%{record_id}")
+    super("http://m.helmet.fi/search~S9?/.%{record_id}b1860148/.%{record_id}/1,1,1,B/holdings~")
   end
 
   def parse_results(doc)
