@@ -32,7 +32,7 @@ MSG
           print "\e[32m.\e[0m"
           begin
             newitem.save! unless newitem.nil?
-	  rescue Postgres::PGError => e
+	  rescue ActiveRecord::RecordNotUnique => e
             print 'duplicate barcode ', barcode
           end
         end
