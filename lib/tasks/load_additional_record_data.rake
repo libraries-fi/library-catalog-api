@@ -26,8 +26,16 @@ MSG
     if record_a.exists?
       record = record_a.first
       fields.each do |barcode|
-        newitem = record.items.create(:barcode => barcode)
-        print "\e[32m.\e[0m"
+	barcode = Item.normalize_barcode(barcode)
+        if not barcode.nil? and barcode != 0
+          newitem = record.items.find_or_initialize_by_barcode(barcode)
+          print "\e[32m.\e[0m"
+          begin
+            newitem.save! unless newitem.nil?
+	  rescue Postgres::PGError => e
+            print 'duplicate barcode ', barcode
+          end
+        end
       end
     end
   end
