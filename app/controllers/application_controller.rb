@@ -2,10 +2,13 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   after_filter :set_access_control_headers
- 
+
   def set_access_control_headers
-    headers['Access-Control-Allow-Origin'] = 'http://localhost:8000'
-    headers['Access-Control-Request-Method'] = '*'
+    request_origin = request.env['HTTP_ORIGIN']
+    if request_origin.match(/^http:\/\/(localhost:|192.168.0.)/)
+      headers['Access-Control-Allow-Origin'] = request_origin
+      headers['Access-Control-Request-Method'] = '*'
+    end
   end
 
   private
