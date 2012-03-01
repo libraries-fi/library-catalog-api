@@ -1,3 +1,17 @@
+## Library Catalog API
+
+Library Catalog API is a Ruby on Rails application
+which exposes MARC library catalog data and enables
+it to be queried using HTTP.
+
+### License
+
+Library Catalog API is licensed under AGPL version 3.
+See file COPYING for details.
+
+The project contains files from 960 Grid System by
+Nathan Smith, licensed under the MIT and GPL licenses.
+
 ## Setup Documentation
 
 ### Install ruby
