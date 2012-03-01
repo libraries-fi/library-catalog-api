@@ -40,5 +40,9 @@ module KirjastoData
     config.filter_parameters += [:password]
 
     config.active_record.schema_format = :sql
+
+    # config.holdings_implementation = the class of the TitleHoldings subclass to be used
+    # config.holdings_baseurl = the location of the site with holdings info (incl. protocol,
+    # without trailing slash)
   end
 end

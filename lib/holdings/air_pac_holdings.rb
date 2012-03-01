@@ -3,10 +3,11 @@ require 'title_holdings'
 require 'nokogiri'
 require 'date'
 
-class HelmetMobiHoldings < TitleHoldings
+# Holdings info for an innovative interfaces Millennium AirPac
+class AirPacHoldings < TitleHoldings
 
-  def initialize()
-    super("http://m.helmet.fi/search~S9?/.%{record_id}/.%{record_id}/1,1,1,B/holdings~")
+  def initialize(base_url)
+    super(base_url + "/search~S9?/.%{record_id}/.%{record_id}/1,1,1,B/holdings~")
   end
 
   def parse_results(doc)
@@ -25,6 +26,24 @@ class HelmetMobiHoldings < TitleHoldings
       results.push(resultrow)
     end
     results
+  end
+
+  def preprocess_results(string_io)
+    in_there = false
+    partial_doc = ""
+    # todo: preformance?
+    string_io.each_line do |line|
+      if line.match(/<div  class="additionalCopies">/)
+        in_there = true
+      elsif in_there and line.match(/<\/div>/)
+        in_there = false
+        partial_doc += line
+      end
+      if in_there
+        partial_doc += line
+      end
+    end
+    partial_doc
   end
 
   def clean_value(str)

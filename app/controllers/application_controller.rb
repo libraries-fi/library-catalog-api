@@ -45,14 +45,36 @@ class ApplicationController < ActionController::Base
 
   def record_as_json(record, callback = nil)
     rec = ActiveSupport::JSON.decode(record.try(:json))
-    # todo: configure the holdings class elsewhere
-    holdings_fetcher = HelmetMobiHoldings.new
-    helmet_id = record.helmet_id.gsub(/^\([^)]+\)/, '')
-    rec['holdings'] = holdings_fetcher.holdings(helmet_id)
+    holdings = get_holdings(record)
+
+    if not holdings.nil?
+      rec['holdings'] = holdings
+    end
+
     if callback
       "#{callback}(#{rec.to_json})"
     else
       rec.to_json
     end
   end
+
+  def get_holdings(record)
+    config = Rails.configuration
+    if (config.respond_to? :holdings_baseurl and
+        config.respond_to? :holdings_implementation)
+
+      base_url, holdings_classname = config.holdings_baseurl, config.holdings_implementation
+      begin
+        holdings_fetcher = Kernel.const_get(holdings_classname).new(base_url)
+        helmet_id = record.helmet_id.gsub(/^\([^)]+\)/, '')
+        holdings = holdings_fetcher.holdings(helmet_id)
+      rescue Exception => e
+        holdings = [{:error => "Misconfigured holdings class. Contact the API administrator."}]
+      end
+      holdings
+    else
+      nil
+    end
+  end
+
 end
