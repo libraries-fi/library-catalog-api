@@ -18,7 +18,7 @@
 %html
   %head
     %meta{:content => "text/html; charset=utf-8", :"http-equiv" => "content-type"}
-    %title Kirjasto data API
+    %title Library Catalog API
 
     %link{:href => "https://fonts.googleapis.com/css?family=Puritan:regular,italic,bold,bolditalic", :rel => "stylesheet", :type => "text/css"}
     %link{:href => "https://fonts.googleapis.com/css?family=Ubuntu:regular,italic,bold,bolditalic", :rel => "stylesheet", :type => "text/css"}
@@ -29,7 +29,7 @@
       #header.grid_13
         %a{:href => "/"}
           .logo
-        %h1 HelMet data API
+        %h1 Library Catalog API
         %ul#navigation
           %li
             = link_to "Home", :root
@@ -37,8 +37,6 @@
             = link_to "Search", search_page_path
           %li
             = link_to "Feedback", feedback_path
-          %li
-            = link_to "Raw data", "data.html"
         %hr/
 
       #content.grid_13
