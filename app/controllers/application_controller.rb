@@ -4,10 +4,12 @@ class ApplicationController < ActionController::Base
   after_filter :set_access_control_headers
 
   def set_access_control_headers
-    request_origin = request.env['HTTP_ORIGIN']
-    if request_origin.match(/^http:\/\/(localhost:|192.168.0.)/)
-      headers['Access-Control-Allow-Origin'] = request_origin
-      headers['Access-Control-Request-Method'] = '*'
+    if request.env.has_key?('HTTP_ORIGIN')
+      request_origin = request.env['HTTP_ORIGIN']
+      if request_origin.match(/^http:\/\/(localhost:|192.168.0.)/)
+        headers['Access-Control-Allow-Origin'] = request_origin
+        headers['Access-Control-Request-Method'] = '*'
+      end
     end
   end
 
