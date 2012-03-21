@@ -15,6 +15,8 @@ class Record < ActiveRecord::Base
 
   validates_uniqueness_of :helmet_id
   has_many :items
+  default_scope :order => 'helmet_id DESC'
+
 
   attr_accessor :item_barcode
 
