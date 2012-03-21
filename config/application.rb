@@ -41,8 +41,51 @@ module KirjastoData
 
     config.active_record.schema_format = :sql
 
-    # config.holdings_implementation = the class of the TitleHoldings subclass to be used
-    # config.holdings_baseurl = the location of the site with holdings info (incl. protocol,
-    # without trailing slash)
+    config.holdings_implementation = 'AirPacHoldings'
+    config.holdings_baseurl = 'http://m.helmet.fi'
+
+    config.lists = {
+      "recommendations" =>
+      [
+       '(FI-HELMET)b1706791',
+       '(FI-HELMET)b1706789',
+       '(FI-HELMET)b1706788',
+       '(FI-HELMET)b1706787',
+       '(FI-HELMET)b1706786',
+       '(FI-HELMET)b1706785',
+       '(FI-HELMET)b1706784',
+       '(FI-HELMET)b1706783',
+       '(FI-HELMET)b1706782',
+       '(FI-HELMET)b1706781',
+       '(FI-HELMET)b1706780',
+       '(FI-HELMET)b1706779',
+       '(FI-HELMET)b1706777'
+      ],
+      "jazz" =>
+      [
+       '(FI-HELMET)b1693310',
+       '(FI-HELMET)b1693311',
+       '(FI-HELMET)b1693313',
+       '(FI-HELMET)b1693315',
+       '(FI-HELMET)b1693317',
+       '(FI-HELMET)b1693318',
+      ],
+      "finnish_novels" => [
+       '(FI-HELMET)b1706803',
+       '(FI-HELMET)b1706802',
+       '(FI-HELMET)b1706801',
+       '(FI-HELMET)b1706800',
+       '(FI-HELMET)b1706799'
+      ],
+      "design_books" => [
+       '(FI-HELMET)b1706798',
+       '(FI-HELMET)b1706797',
+       '(FI-HELMET)b1706796',
+       '(FI-HELMET)b1706795',
+       '(FI-HELMET)b1706794',
+       '(FI-HELMET)b1706793',
+       '(FI-HELMET)b1706792'
+      ],
+    }
   end
 end

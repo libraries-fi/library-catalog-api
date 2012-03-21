@@ -77,4 +77,41 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def respond_with_records(records)
+    respond_to do |format|
+      format.html { render "index" }
+      format.json {
+        if params[:callback]
+          if @search_type == :item
+            json = records_as_json_with_itemids(records, params[:callback])
+          else
+            json = records_as_json(records, params[:callback])
+          end
+          render :js => json, :content_type => 'application/javascript'
+        else
+          if @search_type == :item
+            render :json => records_as_json_with_itemids(records)
+          else
+            render :json => records_as_json(records)
+          end
+        end
+      }
+      format.marcxml { render "records/index" }
+    end
+  end
+
+  def respond_with_record(record)
+    respond_to do |format|
+      format.html { render "index" }
+      format.json {
+        if params[:callback]
+          render :js => record_as_json(record, params[:callback]), :content_type => 'application/javascript'
+        else
+          render :json => record_as_json(record)
+        end
+      }
+      format.marcxml { render "records/index" }
+    end
+  end
+
 end
