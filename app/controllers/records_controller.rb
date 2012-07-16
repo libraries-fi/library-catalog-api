@@ -2,7 +2,7 @@ class RecordsController < ApplicationController
   respond_to :json, :marcxml
   
   def index
-    @records = Record.paginate(:page => params[:page], :order => "helmet_id DESC", :per_page => 30)
+    @records = Record.paginate(:page => params[:page], :order => "helmet_id DESC", :per_page => 12, :total_entries => 616022)
 
     respond_to do |format|
       format.html # index.html.erb

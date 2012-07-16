@@ -1,5 +1,7 @@
+require 'will_paginate/array'
+
 class SearchController < ApplicationController
-  PER_PAGE = 30
+  PER_PAGE = 12
 
   def form_redirect
     type = params.delete(:type)
