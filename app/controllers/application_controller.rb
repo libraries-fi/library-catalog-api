@@ -16,9 +16,17 @@ class ApplicationController < ActionController::Base
   private
 
   def records_as_json_with_itemids(records, callback = nil)
-    json = (records.map {|record| "\"#{record.item_barcode}\": #{record.json}"}).join(",")
-    json = wrap_page("\"records\":{#{json}}", records)
-    wrap_json(json, callback)
+    if records.length == 1
+      rec = ActiveSupport::JSON.decode(records[0].try(:json))
+      rec['hold_count'] = holds(records[0].helmet_id)
+      json = (records.map {|record| "\"#{record.item_barcode}\": #{rec}"}).join(",")
+      json = wrap_page("\"records\":{#{json}}", records)
+      return wrap_json(json, callback)
+    else
+      json = (records.map {|record| "\"#{record.item_barcode}\": #{record.json}"}).join(",")
+      json = wrap_page("\"records\":{#{json}}", records)
+      wrap_json(json, callback)
+      end
   end
 
   def records_as_json(records, callback = nil)
@@ -48,7 +56,8 @@ class ApplicationController < ActionController::Base
     holdings = get_holdings(record)
 
     if not holdings.nil?
-      rec['holdings'] = holdings
+      # availability
+      rec['holdings'] = holdings['holdings']
     end
 
     if callback
@@ -76,6 +85,12 @@ class ApplicationController < ActionController::Base
       nil
     end
   end
+
+  def holds(record_id)
+    hold_checker = AirPacHoldCheck.new('http://m.helmet.fi') # todo: get from settings
+    hold_checker.has_holds(record_id)
+  end
+
 
   def respond_with_records(records)
     respond_to do |format|

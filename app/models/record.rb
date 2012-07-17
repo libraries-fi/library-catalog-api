@@ -18,7 +18,7 @@ class Record < ActiveRecord::Base
   default_scope :order => 'helmet_id DESC'
 
 
-  attr_accessor :item_barcode
+  attr_accessor :item_barcode, :hold_count
 
   def name
     if title_main.match(/ \/$/)

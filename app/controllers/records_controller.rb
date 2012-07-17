@@ -1,3 +1,5 @@
+require 'air_pac_hold_check'
+
 class RecordsController < ApplicationController
   respond_to :json, :marcxml
   
@@ -32,5 +34,5 @@ class RecordsController < ApplicationController
       format.marcxml # show.xml.erb
     end
   end
-  
+
 end
