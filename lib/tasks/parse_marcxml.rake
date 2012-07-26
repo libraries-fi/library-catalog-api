@@ -1,4 +1,5 @@
 require "marcxml_parser"
+require "record_helper"
 require "open-uri"
 
 task :default => :parse_marcxml
@@ -22,20 +23,7 @@ task :load_marcxml_files => :environment do
     record_data << line
     if line.match(/<\/record>/)
       record = Record.new(:marcxml => record_data)
-      record.generate_json
-      if record.valid?
-        record.save!
-        if record.helmet_id.blank? || record.title_main.blank?
-          print "\e[31m.\e[0m"
-        elsif record.author_main.blank?
-          print "\e[37m.\e[0m"
-        else
-          print "\e[32m.\e[0m"
-        end
-        counter += 1
-      else
-        print "\e[33m.\e[0m"
-      end
+      handle_record(record)
       record_data = ""
     end
   end
@@ -44,6 +32,7 @@ task :load_marcxml_files => :environment do
   puts "-" * 30
   puts "Added #{counter} records."
 end
+
 
 task :migrate_isbn => :environment do
   Record.find_in_batches(:batch_size => 1000) do |record_group|

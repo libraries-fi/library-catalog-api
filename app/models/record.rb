@@ -1,45 +1,54 @@
 # encoding: utf-8
 #
-
+require 'marc_features'
+require 'list_features'
 
 class Record < ActiveRecord::Base
-  include PgSearch
+  validates_uniqueness_of :helmet_id
+  has_many                :items
+  default_scope           :order => 'helmet_id DESC'
+  attr_accessor           :item_barcode, :hold_count
+  serialize               :importdata, Hash
 
-  def self.search_by_isbn(isbn)
+  include PgSearch
+  pg_search_scope :search_by_title,
+  :against => :title_main, :using => :tsearch
+
+  pg_search_scope :search_by_author,
+  :against => :author_main, :using => :tsearch
+
+  pg_search_scope :search_by_additional_authors,
+  :against => :additional_authors, :using => :tsearch
+
+  @@url_template =
+    "http://haku.helmet.fi/iii/encore/record/C__R%s__Orightresult?lang=fin"
+  @@id_pattern =
+    /\(FI-HELMET\)(\w*)/
+
+  def search_by_isbn(isbn)
     where(:isbn => isbn.tr("- ", ""))
   end
 
-  pg_search_scope :search_by_title, :against => :title_main, :using => :tsearch
-  pg_search_scope :search_by_author, :against => :author_main, :using => :tsearch
-  pg_search_scope :search_by_additional_authors, :against => :additional_authors, :using => :tsearch
-
-  validates_uniqueness_of :helmet_id
-  has_many :items
-  default_scope :order => 'helmet_id DESC'
-
-
-  attr_accessor :item_barcode, :hold_count
-
   def name
-    if title_main.match(/ \/$/)
-      title_main[0..-3]
-    else
-      title_main
-    end
+    title_main.sub(/ \/$/, '')
   end
 
   def marcxml=(new_marcxml)
     @parsed_xml = nil
     write_attribute(:marcxml, new_marcxml)
+    extend MarcXMLRecordFeatures
+    denormalize_fields
+  end
+
+  def importdata=(new_importeddata)
+    @imported_data = nil
+    write_attribute(:importdata, new_importeddata)
+    extend ListedRecordFeatures
     denormalize_fields
   end
 
   def record_type
-    leader = parsed_xml.css("leader")
-    record_type = leader.text[6]
-    bibliographic_level = leader.text[7]
-
-    case record_type
+    case material_type
     when "r"
       "object"
     when "k"
@@ -81,98 +90,44 @@ class Record < ActiveRecord::Base
     end
   end
 
+  def publisher
+    text = get_text('260', 'b')
+    if text
+      text.strip.chomp(',')
+    else
+      nil
+    end
+  end
+
+  def library_url
+    @@url_template % helmet_id.match(@@id_pattern)[1]
+  end
+
   # Generates the json version of the record.
-  #--
   # This is currently called at record batch import time.
   #
   def generate_json
-    unless marcxml.blank?
+    if not marcxml.blank? or not importdata == nil
       self.json = {
-        :type => record_type,
-        :isbn => isbn,
-        :title => title_main,
-        :library_id => helmet_id,
-        :library_url => "http://haku.helmet.fi/iii/encore/record/C__R#{helmet_id.match(/\(FI-HELMET\)(\w*)/)[1]}__Orightresult?lang=fin",
-        :author => author_main,
-        :publisher => parsed_xml.css("datafield[tag='260']").css("subfield[code='b']").text.strip.chomp(','),
-        :year => parsed_xml.css("datafield[tag='260']").css("subfield[code='c']").text,
-        :author_details => parsed_xml.css("datafield[tag='700'], datafield[tag='710']").map do |data_field|
-          role = data_field.css("subfield[code='e']").map(&:text).join(", ").strip
-          role = nil if role.empty?
-          {
-            :name => data_field.css("subfield[code='a']").map(&:text).join(", "),
-            :role => role
-          }
-        end,
-        :extent => parsed_xml.css("datafield[tag='300']").map do |data_field|
-          data_field.css("subfield[code='a']").text
-        end,
-        :description => parsed_xml.css("datafield[tag='500']").map do |data_field|
-          data_field.css("subfield[code='a']").text
-        end,
-        :contents => parsed_xml.css("datafield[tag='505']").map do |data_field|
-          data_field.css("subfield[code='a']").text
-        end,
+        :type           => record_type,
+        :isbn           => isbn,
+        :title          => title_main,
+        :library_id     => helmet_id,
+        :library_url    => library_url,
+        :author         => author_main,
+        :publisher      => publisher,
+        :year           => get_text('260', 'c'),
+        :extent         => collect_text('300', 'a'),
+        :description    => collect_text('500', 'a'),
+        :contents       => collect_text('505', 'a'),
+        :author_details => additional_authors_with_roles
       }.to_json
     end
   end
 
-  def to_param
-    helmet_id
-  end
-
-
   private
 
-  def parsed_xml
-    @parsed_xml ||= Nokogiri::XML(self.marcxml)
-  end
-    
-  def denormalize_fields
-    unless marcxml.blank?
-
-      author_fields = parsed_xml.css("datafield[tag='100'], datafield[tag='110']")
-      unless author_fields.empty?
-        self.author_main = author_fields.first.css("subfield[code='a']").text
-      end
-
-      authors = ''
-      parsed_xml.css("datafield[tag='700'], datafield[tag='710']").map do |data_field|
-        authors << ' ' << data_field.css("subfield[code='a']").text.strip
-      end
-      self.additional_authors = authors
-
-      title_tag = parsed_xml.css("datafield[tag='245']").first
-      unless title_tag.nil?
-        self.title_main = title_tag.css("subfield[code='a']").text
-        subtitle_tag = title_tag.css("subfield[code='b']").first
-        if subtitle_tag.nil?
-          self.title_main = strip_punctuation(self.title_main)
-        else
-          self.title_main << ' ' << strip_punctuation(subtitle_tag.text)
-        end
-      end
-      denormalize_isbn
-      denormalize_helmet_id
-    end
-  end
-
-
   def strip_punctuation(title)
-    return title.sub(/[ ]+[\/=:]$/, '')
-  end
-
-  def denormalize_helmet_id
-    self.helmet_id = parsed_xml.css("datafield[tag='035']").first.css("subfield[code='a']").text
-  end
-
-  def denormalize_isbn
-    isbn_field = parsed_xml.css("datafield[tag='020']").first
-    unless isbn_field.nil?
-      match = isbn_field.css("subfield").children.first.text.match(/^[\d\-X]+/).try(:[], 0)
-      if match
-        self.isbn = match.tr("-", "")
-      end
-    end
+    return title.sub(/[ ]+[\/=:,]$/, '').sub(/,$/, '')
   end
 end

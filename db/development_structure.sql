@@ -83,38 +83,6 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: items; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE items (
-    id integer NOT NULL,
-    barcode integer,
-    record_id integer,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone
-);
-
-
---
--- Name: items_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE items_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MAXVALUE
-    NO MINVALUE
-    CACHE 1;
-
-
---
--- Name: items_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE items_id_seq OWNED BY items.id;
-
-
---
 -- Name: records; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -129,7 +97,8 @@ CREATE TABLE records (
     marcxml text,
     json text,
     author_indexfield tsvector,
-    additional_authors text
+    additional_authors text,
+    importdata text
 );
 
 
@@ -165,22 +134,7 @@ CREATE TABLE schema_migrations (
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE items ALTER COLUMN id SET DEFAULT nextval('items_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
 ALTER TABLE records ALTER COLUMN id SET DEFAULT nextval('records_id_seq'::regclass);
-
-
---
--- Name: items_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
---
-
-ALTER TABLE ONLY items
-    ADD CONSTRAINT items_pkey PRIMARY KEY (id);
 
 
 --
@@ -196,13 +150,6 @@ ALTER TABLE ONLY records
 --
 
 CREATE INDEX fii_foo ON records USING gin (author_indexfield);
-
-
---
--- Name: index_items_on_barcode; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE UNIQUE INDEX index_items_on_barcode ON items USING btree (barcode);
 
 
 --
@@ -294,3 +241,5 @@ INSERT INTO schema_migrations (version) VALUES ('20120112152201');
 INSERT INTO schema_migrations (version) VALUES ('20120113105720');
 
 INSERT INTO schema_migrations (version) VALUES ('20120113105943');
+
+INSERT INTO schema_migrations (version) VALUES ('20120726084653');
