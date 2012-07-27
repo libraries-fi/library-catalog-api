@@ -24,10 +24,11 @@ MSG
   file.gets
   while line = file.gets
     begin
+      line.tr!("\\", "\t")
       fields = CSV::parse_line(line, csv_options)
     rescue CSV::MalformedCSVError => e
-      line.tr!(';', ',')
-      fields = line.parse_csv
+      line.tr!("\\", "\t")
+      fields = CSV::parse_line(line, csv_options)
     end
     helmet_id = "(FI-HELMET)" << fields.shift.chop
     record_a = Record.where(:helmet_id => helmet_id)
@@ -59,6 +60,9 @@ MSG
           rescue ActiveRecord::RecordInvalid => e
             puts
             puts "duplicate barcode or item no #{barcode} #{item_no}"
+          rescue PGError=>e
+            puts
+            puts "too big barcode #{barcode}, #{e.to_s}"
           end
         end
       end
