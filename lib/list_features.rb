@@ -72,7 +72,7 @@ module ListedRecordFeatures
       self.additional_authors =
         additional_authors_with_roles.map{|val| val[:name]}.join(" ")
 
-      unless imported_data["TITLE"].empty?
+      unless imported_data["TITLE"].nil? or imported_data["TITLE"].empty?
         self.title_main = get_text('245', 'a')
         subtitle = get_text('245', 'b')
         if subtitle.nil?

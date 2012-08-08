@@ -138,6 +138,79 @@ MSG
   end
 end
 
+desc "Load only bibliographic data from a csv-like text file"
+task :load_csv_bib_data => :environment do
+  file_name = ENV["FILE"]
+
+  unless file_name
+    p <<MSG
+        Pass wanted file path (or URL) with environment variable FILE. Example: rake load_full_data FILE=barcodes.csv
+MSG
+  else
+    file = File.open(file_name, "r")
+    headers = nil
+    row = nil
+    counter = 0
+    rows = []
+    last_record_no = nil
+    file.each_line do |line|
+      if file.lineno > 1
+        row = CSV::parse_line(preprocess_line(line), csv_options)
+      else
+        headers = CSV::parse_line(line, csv_options)
+      end
+      if row
+        row.map! do |item|
+          new_item = []
+          if item
+            new_item = item.split("\\")
+          end
+          if new_item.length > 1
+            new_item
+          else
+            item
+          end
+        end
+        row_hash = Hash[*headers.zip(row).flatten(1)]
+        record_no = row_hash["RECORD #(BIBLIO)"].chop
+        if record_no == last_record_no
+           next
+        else
+           last_record_no = record_no
+        end
+        record = Record.find_or_initialize_by_helmet_id(
+          "(FI-HELMET)" + record_no)
+        record.marcxml = nil
+        record.importdata = row_hash
+        counter = handle_record(record, counter)
+        # record.ensure_array(
+        #   row_hash["BARCODE"]).zip(
+        #     record.ensure_array(
+        #       row_hash["RECORD #(ITEM)"])).each do |barcode, itemno|
+
+        #   barcode = Item.normalize_barcode(barcode)
+        #   if not barcode.nil? and barcode != 0 and not itemno.nil? and itemno != 0
+        #     newitem = record.items.find_or_initialize_by_barcode(barcode)
+
+        #     #strip leading i and trailing checksum
+        #     newitem.item_no = itemno[1..-2]
+        #     print "\e[34m.\e[0m"
+        #     begin
+        #       newitem.save! unless newitem.nil?
+        #     rescue ActiveRecord::RecordNotUnique => e
+        #       puts
+        #       puts 'duplicate barcode #{barcode}'
+        #     rescue ActiveRecord::RecordInvalid => e
+        #       puts
+        #       puts "duplicate barcode or item no #{barcode} #{itemno}"
+        #     end
+        #   end
+        # end
+      end
+    end
+  end
+end
+
 def preprocess_line(line)
   fields = line.split("\t")
   fixed_fields = fields[0..29]
