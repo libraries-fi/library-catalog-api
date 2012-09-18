@@ -18,8 +18,7 @@ class ApplicationController < ActionController::Base
   def records_as_json_with_itemids(records, callback = nil)
     if records.length == 1
       rec = ActiveSupport::JSON.decode(records[0].try(:json))
-      rec['hold_count'] = 5
-#      rec['hold_count'] = holds(records[0].helmet_id)
+      rec['hold_count'] = holds(records[0].helmet_id)
       rec_json = ActiveSupport::JSON.encode(rec)
       json = "\"#{records[0].item_barcode}\": #{rec_json}"
       json = wrap_page("\"records\":{#{json}}", records)
@@ -59,7 +58,7 @@ class ApplicationController < ActionController::Base
 
     if not holdings.nil?
       # availability
-      rec['holdings'] = holdings['holdings']
+      rec['holdings'] = holdings
     end
 
     if callback
