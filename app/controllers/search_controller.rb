@@ -36,7 +36,7 @@ class SearchController < ApplicationController
     @records = @items.collect do |item|
       record = item.record
       record.item_barcode = item.barcode
-      barcodes.delete(item.barcode)
+      barcodes.delete(item.barcode.to_s)
       record
     end
     # Any barcodes left were not found in the database
