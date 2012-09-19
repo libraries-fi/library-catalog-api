@@ -30,12 +30,19 @@ class SearchController < ApplicationController
   end
 
   def item
+    barcodes = params[:query]
     @search_type = :item
-    @items = Item.where(:barcode => params[:query])
+    @items = Item.where(:barcode => barcodes)
     @records = @items.collect do |item|
       record = item.record
       record.item_barcode = item.barcode
+      barcodes.delete(item.barcode)
       record
+    end
+    # Any barcodes left were not found in the database
+    # and require 
+    if barcodes.length > 0
+      Rails.logger.warn "#{Time.new} Missing items #{barcodes}"
     end
     respond_with_records(@records)
   end
