@@ -30,13 +30,15 @@ class SearchController < ApplicationController
   end
 
   def item
-    barcodes = params[:query]
+    barcodes = params[:query].map do |bcs|
+      extract_int(bcs)
+    end
     @search_type = :item
     @items = Item.where(:barcode => barcodes)
     @records = @items.collect do |item|
       record = item.record
       record.item_barcode = item.barcode
-      barcodes.delete(item.barcode.to_s)
+      barcodes.delete(item.barcode)
       record
     end
     # Any barcodes left were not found in the database
@@ -84,5 +86,9 @@ class SearchController < ApplicationController
       }
       format.marcxml { render "records/index" }
     end
+  end
+
+  def extract_int(string)
+    string.gsub(/[^0-9]+/, '').to_i
   end
 end
