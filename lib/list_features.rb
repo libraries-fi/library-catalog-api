@@ -73,8 +73,8 @@ module ListedRecordFeatures
         additional_authors_with_roles.map{|val| val[:name]}.join(" ")
 
       unless imported_data["TITLE"].nil? or imported_data["TITLE"].empty?
-        self.title_main = get_text('245', 'a')
-        subtitle = get_text('245', 'b')
+        self.title_main = get_text('245', 'a') or ''
+        subtitle = get_text('245', 'b') or ''
         if subtitle.nil?
           self.title_main = strip_punctuation(self.title_main)
         else
