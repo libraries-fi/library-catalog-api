@@ -182,30 +182,14 @@ MSG
           "(FI-HELMET)" + record_no)
         record.marcxml = nil
         record.importdata = row_hash
-        counter = handle_record(record, counter)
-        # record.ensure_array(
-        #   row_hash["BARCODE"]).zip(
-        #     record.ensure_array(
-        #       row_hash["RECORD #(ITEM)"])).each do |barcode, itemno|
-
-        #   barcode = Item.normalize_barcode(barcode)
-        #   if not barcode.nil? and barcode != 0 and not itemno.nil? and itemno != 0
-        #     newitem = record.items.find_or_initialize_by_barcode(barcode)
-
-        #     #strip leading i and trailing checksum
-        #     newitem.item_no = itemno[1..-2]
-        #     print "\e[34m.\e[0m"
-        #     begin
-        #       newitem.save! unless newitem.nil?
-        #     rescue ActiveRecord::RecordNotUnique => e
-        #       puts
-        #       puts 'duplicate barcode #{barcode}'
-        #     rescue ActiveRecord::RecordInvalid => e
-        #       puts
-        #       puts "duplicate barcode or item no #{barcode} #{itemno}"
-        #     end
-        #   end
-        # end
+        begin
+          counter = handle_record(record, counter)
+        rescue Exception => e
+          puts
+          puts "line number #{file.lineno}"
+          puts e.message  
+          puts e.backtrace.inspect
+        end
       end
     end
   end

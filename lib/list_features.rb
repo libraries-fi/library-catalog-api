@@ -68,13 +68,13 @@ module ListedRecordFeatures
   def denormalize_fields
     unless imported_data.blank?
       self.author_main =
-        strip_punctuation((get_text('100', 'a') or get_text('110', 'a') or ""))
+        strip_punctuation((get_text('100', 'a') || get_text('110', 'a') || ""))
       self.additional_authors =
         additional_authors_with_roles.map{|val| val[:name]}.join(" ")
 
       unless imported_data["TITLE"].nil? or imported_data["TITLE"].empty?
-        self.title_main = get_text('245', 'a') or ''
-        subtitle = get_text('245', 'b') or ''
+        self.title_main = get_text('245', 'a') || ''
+        subtitle = get_text('245', 'b') || ''
         if subtitle.nil?
           self.title_main = strip_punctuation(self.title_main)
         else
