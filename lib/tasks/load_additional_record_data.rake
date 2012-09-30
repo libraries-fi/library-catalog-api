@@ -1,11 +1,6 @@
 require 'csv'
 require 'record_helper'
-
-csv_options = {
-  :col_sep => "\t",
-  :quote_char => '~',
-  :headers => false
-}
+require 'csv_import'
 
 
 task :default => :load_additional_data
@@ -81,186 +76,21 @@ task :load_full_data => :environment do
         Pass wanted file path (or URL) with environment variable FILE. Example: rake load_full_data FILE=barcodes.csv
 MSG
   else
-    file = File.open(file_name, "r")
-    headers = nil
-    row = nil
-    counter = 0
-    rows = []
-    file.each_line do |line|
-      if file.lineno > 1
-        row = CSV::parse_line(preprocess_line(line), csv_options)
-      else
-        headers = CSV::parse_line(line, csv_options)
-      end
-      if row
-        row.map! do |item|
-          new_item = []
-          if item
-            new_item = item.split("\\")
-          end
-          if new_item.length > 1
-            new_item
-          else
-            item
-          end
-        end
-        row_hash = Hash[*headers.zip(row).flatten(1)]
-        record = Record.find_or_initialize_by_helmet_id(
-          "(FI-HELMET)" + row_hash["RECORD #(BIBLIO)"].chop)
-        record.marcxml = nil
-        record.importdata = row_hash
-        counter = handle_record(record, counter)
-        record.ensure_array(
-          row_hash["BARCODE"]).zip(
-            record.ensure_array(
-              row_hash["RECORD #(ITEM)"])).each do |barcode, itemno|
-
-          barcode = Item.normalize_barcode(barcode)
-          if not barcode.nil? and barcode != 0 and not itemno.nil? and itemno != 0
-            newitem = record.items.find_or_initialize_by_barcode(barcode)
-
-            #strip leading i and trailing checksum
-            newitem.item_no = itemno[1..-2]
-            print "\e[34m.\e[0m"
-            begin
-              newitem.save! unless newitem.nil?
-            rescue ActiveRecord::RecordNotUnique => e
-              puts
-              puts 'duplicate barcode #{barcode}'
-            rescue ActiveRecord::RecordInvalid => e
-              puts
-              puts "duplicate barcode or item no #{barcode} #{itemno}"
-            end
-          end
-        end
-      end
-    end
+    puts "Beginning import of file #{file_name} at #{Time.now()}"
+    recid_mappings = load_bib_data(file_name)
+    handle_items(file_name, recid_mappings)
+    puts "Import finished at #{Time.now()}"
   end
 end
 
 desc "Load only bibliographic data from a csv-like text file"
 task :load_csv_bib_data => :environment do
   file_name = ENV["FILE"]
-
   unless file_name
     p <<MSG
         Pass wanted file path (or URL) with environment variable FILE. Example: rake load_full_data FILE=barcodes.csv
 MSG
   else
-    file = File.open(file_name, "r")
-    headers = nil
-    row = nil
-    counter = 0
-    rows = []
-    last_record_no = nil
-    file.each_line do |line|
-      if file.lineno > 1
-        row = CSV::parse_line(preprocess_line(line), csv_options)
-      else
-        headers = CSV::parse_line(line, csv_options)
-      end
-      if row
-        row.map! do |item|
-          new_item = []
-          if item
-            new_item = item.split("\\")
-          end
-          if new_item.length > 1
-            new_item
-          else
-            item
-          end
-        end
-        row_hash = Hash[*headers.zip(row).flatten(1)]
-        record_no = row_hash["RECORD #(BIBLIO)"].chop
-        if record_no == last_record_no
-           next
-        else
-           last_record_no = record_no
-        end
-        record = Record.find_or_initialize_by_helmet_id(
-          "(FI-HELMET)" + record_no)
-        record.marcxml = nil
-        record.importdata = row_hash
-        begin
-          counter = handle_record(record, counter)
-        rescue Exception => e
-          puts
-          puts "line number #{file.lineno}"
-          puts e.message  
-          puts e.backtrace.inspect
-        end
-      end
-    end
+    load_bib_data(file_name)
   end
-end
-
-def preprocess_line(line)
-  fields = line.split("\t")
-  fixed_fields = fields[0..29]
-  variable_fields = fields[30..-1]
-  pattern = /i[0-9]{6,}x?/
-  variable_fields.chunk {|field| pattern.match(field) != nil}.each do |item_id, values|
-    fixed_fields.push(values.join("\\"))
-  end
-  return fixed_fields.join("\t")
-end
-
-
-desc "Load barcodes and other additional data from text files"
-task :emit_sql => :environment do
-  file_name = ENV["FILE"]
-  ids = ENV["FILE_ID"]
-
-  unless file_name
-    p <<MSG
-        Pass wanted file path (or URL) with environment variable FILE. Example: rake load_additional_data FILE=barcodes.csv
-MSG
-  end
-
-  helm_to_id = {}
-  File.open(ids, "r") do |f|
-    f.each_line do |line|
-      helmid, recid = line.split
-      helm_to_id[helmid] = recid
-    end
-  end
-
-  file = open(file_name)
-  file.gets
-#  puts "BEGIN;"
-  while line = file.gets
-    begin
-      line.tr!("\\", "\t")
-      fields = CSV::parse_line(line, csv_options)
-    rescue CSV::MalformedCSVError => e
-      line.tr!("\\", "\t")
-      fields = CSV::parse_line(line, csv_options)
-    end
-    helmet_id = "(FI-HELMET)" << fields.shift.chop
-    rec_id = helm_to_id[helmet_id]
-    unless rec_id.nil?
-
-      item_nos = []
-      barcodes = []
-      fields.chunk{|item| (item and item.match(/i[0-9]{6,}x?/) != nil)}.map do |predicate, values|
-        if predicate
-          item_nos = values
-        else
-          barcodes = values
-        end
-      end
-      items = item_nos.zip(barcodes)
-
-#      record = record_a.first
-      items.each do |item_no, barcode|
-        item_no = item_no[1..-2]
-        barcode = Item.normalize_barcode(barcode)
-        if not barcode.nil? and barcode != 0
-          puts "INSERT INTO items (barcode, item_no, created_at, updated_at, record_id) VALUES (#{barcode}, #{item_no}, now(), now(), #{rec_id});"
-        end
-      end
-    end
-  end
-#  puts "COMMIT;"
 end
