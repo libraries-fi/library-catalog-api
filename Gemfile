@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.19'
+gem 'rails', '~>3.0.19'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -10,7 +10,7 @@ gem 'nokogiri', '1.4.4'
 gem 'haml-rails', '0.3.4'
 gem 'will_paginate'
 gem 'pg_search', '0.2'
-gem 'highlight', '1.1.2'
+gem 'highlight', '~>1.1.3'
 gem 'RedCloth', '4.2.3'
 gem 'coderay', '0.9.7'
 
