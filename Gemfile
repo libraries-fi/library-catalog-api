@@ -1,11 +1,11 @@
 source 'http://rubygems.org'
 
-gem 'rails', '~>3.0.19'
+gem 'rails', '~>3.1.0'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'pg', '0.10.0'
+gem 'pg', '~>0.11.0'
 gem 'nokogiri', '1.4.4'
 gem 'haml-rails', '0.3.4'
 gem 'will_paginate'

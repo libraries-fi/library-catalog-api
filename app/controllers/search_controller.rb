@@ -1,3 +1,5 @@
+require 'will_paginate/array'
+
 class SearchController < ApplicationController
   PER_PAGE = 30
 
